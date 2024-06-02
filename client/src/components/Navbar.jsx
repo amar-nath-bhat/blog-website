@@ -45,10 +45,10 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <a href="/login" className="text-white" onClick={handleLogin}>
+              <a href="/login" className="text-white">
                 Login
               </a>
-              <a href="/register" className="text-white">
+              <a href="/signup" className="text-white">
                 Signup
               </a>
             </>
@@ -75,10 +75,10 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <a href="/login" className="text-white" onClick={handleLogin}>
+              <a href="/login" className="text-white">
                 Login
               </a>
-              <a href="/register" className="text-white">
+              <a href="/signup" className="text-white">
                 Signup
               </a>
             </>

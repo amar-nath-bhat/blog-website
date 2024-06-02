@@ -1,6 +1,6 @@
 import React from "react";
 
-function Login() {
+function Signup() {
   return (
     <div className="rounded-2xl shadow-lg shadow-black border-black m-8 md:mx-auto md:my-16 md:p-16 p-6 concert-one-regular flex flex-col items-center justify-start md:text-4xl text-2xl w-fit h-fit">
       <img
@@ -27,16 +27,24 @@ function Login() {
           className="rounded-lg mt-2 md:mt-4 px-2 pb-2 border border-solid border-gray-500"
         />
 
-        <div className="flex flex-col items-center justify-center mt-3 md:mt-5 gap-2 md:gap-5">
+        <label htmlFor="password">Confirm Password:</label>
+        <input
+          type="password"
+          id="confirm_password"
+          name="confirm_password"
+          className="rounded-lg mt-2 md:mt-4 px-2 pb-2 border border-solid border-gray-500"
+        />
+
+        <div className="flex flex-col items-center mt-3 gap-2">
           <button type="submit" className="">
-            Login
+            Signup
           </button>
-          <span className="text-xl md:text-3xl text-white mt-1">OR</span>
-          <a href="/signup">Don't have an account?</a>
+          <span className="text-xl md:text-3xl mt-1 text-white">OR</span>
+          <a href="/login">Already have an account?</a>
         </div>
       </form>
     </div>
   );
 }
 
-export default Login;
+export default Signup;
