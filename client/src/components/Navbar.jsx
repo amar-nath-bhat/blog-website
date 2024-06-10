@@ -1,88 +1,55 @@
 import React, { useState } from "react";
+import { Button } from "./Button";
 
-const Navbar = () => {
-  const [isLogin, setLogin] = useState(false);
+const Navbar = ({ isAuthenticated }) => {
   const [showDropDown, setShowDropDown] = useState(false);
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-    setLogin(!isLogin);
-  };
 
   const showDropDownFunc = () => {
     setShowDropDown(!showDropDown);
   };
 
+  const hometab = () => (
+    <>
+      <Button type={true} className="text-white" text="Home" href="/" />
+
+      <Button type={true} className="text-white" text="About" href="/about" />
+
+      <Button type={true} className="text-white" text="Blogs" href="/blogs" />
+
+      <Button type={true} className="text-white" text="Logout" href="/signup" />
+    </>
+  );
+
+  const logintab = () => (
+    <>
+      <Button type={true} className="text-white" text="Login" href="/login" />
+
+      <Button type={true} className="text-white" text="Signup" href="/signup" />
+    </>
+  );
+
   return (
     <nav className="bg-color-navbar flex-col concert-one-regular py-4">
       <div className="flex justify-between items-center text-4xl md:px-16 px-8">
-        <a href="/" className="">
+        <Button href="/" className="">
           <img src="logo-no-bg.png" alt="Fouxy" className="w-16 h-16" />
-        </a>
-        <div className="md:hidden block w-10 h-10">
+        </Button>
+        <Button type={true} href="/" className="md:hidden block w-10 h-10">
           <img
             src="hamburger.png"
             alt="Menu"
             onClick={showDropDownFunc}
             className="cursor-pointer"
           />
-        </div>
+        </Button>
         <div className="hidden md:flex justify-center md:gap-10 gap-2 h-16">
-          {isLogin ? (
-            <>
-              <a href="/" className="text-white">
-                Home
-              </a>
-              <a href="/about" className="text-white">
-                About
-              </a>
-              <a href="/blogs" className="text-white">
-                Blogs
-              </a>
-              <a href="/" onClick={handleLogin} className="text-white">
-                Logout
-              </a>
-            </>
-          ) : (
-            <>
-              <a href="/login" className="text-white">
-                Login
-              </a>
-              <a href="/signup" className="text-white">
-                Signup
-              </a>
-            </>
-          )}
+          {isAuthenticated ? hometab() : logintab()}
         </div>
       </div>
 
       {showDropDown && (
         <div className="flex flex-col items-start gap-2 mx-10 text-xl">
-          {isLogin ? (
-            <>
-              <a href="/" className="text-white">
-                Home
-              </a>
-              <a href="/about" className="text-white">
-                About
-              </a>
-              <a href="/blogs" className="text-white">
-                Blogs
-              </a>
-              <a href="/" onClick={handleLogin} className="text-white">
-                Logout
-              </a>
-            </>
-          ) : (
-            <>
-              <a href="/login" className="text-white">
-                Login
-              </a>
-              <a href="/signup" className="text-white">
-                Signup
-              </a>
-            </>
-          )}
+          {isAuthenticated ? hometab() : logintab()}
         </div>
       )}
     </nav>

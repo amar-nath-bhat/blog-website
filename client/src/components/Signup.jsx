@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { API } from "../services/api.js";
 import { DataContext } from "../context/DataProvider.jsx";
+import { Button } from "./Button.jsx";
 
 const signupInitialValue = {
   name: "",
@@ -14,8 +15,8 @@ const loginInitialValue = {
   password: "",
 };
 
-function Signup({ isUserAuthenticated }) {
-  const [accState, setAccState] = useState("signup");
+function Signup({ isUserAuthenticated, type }) {
+  const [accState, setAccState] = useState(type);
   const [signup, setSignup] = useState(signupInitialValue);
   const [login, setLogin] = useState(loginInitialValue);
   const [error, showError] = useState("");
@@ -57,12 +58,12 @@ function Signup({ isUserAuthenticated }) {
         console.log(accState);
       } else {
         console.log(accState);
-        showError("Something went wrong. Please try again.");
+        showError(response.message);
       }
     } catch (e) {
       console.log(e.message);
 
-      showError("Something went wrong. Please try again.");
+      showError(e.message);
     }
   };
 
@@ -90,12 +91,11 @@ function Signup({ isUserAuthenticated }) {
         setLogin(loginInitialValue);
         navigate("/");
       } else {
-        showError("Something went wrong! please try again later");
+        showError(response.message);
       }
     } catch (e) {
       console.log(e.message);
-
-      showError("Something went wrong. Please try again.");
+      showError(e.message);
     }
   };
 
@@ -155,13 +155,13 @@ function Signup({ isUserAuthenticated }) {
 
             {error && <p className="text-red-500 text-base">{error}</p>}
             <div className="flex flex-col items-center mt-3 gap-2">
-              <button type="submit" className="" onClick={(e) => signupUser(e)}>
-                Signup
-              </button>
+              <Button text="Signup" onClicked={(e) => signupUser(e)} />
+
               <span className="text-xl md:text-3xl text-white">OR</span>
-              <button onClick={(e) => toggleAccState(e)}>
-                Already have an account?
-              </button>
+              <Button
+                text="Already have an account?"
+                onClicked={(e) => toggleAccState(e)}
+              />
             </div>
           </>
         ) : (
@@ -189,13 +189,12 @@ function Signup({ isUserAuthenticated }) {
             />
             {error && <p className="text-red-500 text-base">{error}</p>}
             <div className="flex flex-col items-center justify-center mt-3 md:mt-5 gap-2 md:gap-5">
-              <button type="submit" className="" onClick={(e) => loginUser(e)}>
-                Login
-              </button>
+              <Button text="Login" onClicked={(e) => loginUser(e)} />
               <span className="text-xl md:text-3xl text-white">OR</span>
-              <button onClick={(e) => toggleAccState(e)}>
-                Don't have an account?
-              </button>
+              <Button
+                text="Don't have an account?"
+                onClicked={(e) => toggleAccState(e)}
+              />
             </div>
           </>
         )}
