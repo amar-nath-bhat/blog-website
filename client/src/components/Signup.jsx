@@ -103,7 +103,7 @@ function Signup({ isUserAuthenticated, type }) {
     <div className="flex justify-center pt-24">
       <div
         className="rounded-2xl shadow-lg shadow-black border-black md:p-16 p-6 concert-one-regular flex flex-col items-center justify-start md:text-4xl text-2xl w-fit h-full"
-        style={{backgroundColor: "#ff9568"}}
+        style={{ backgroundColor: "#ff9570" }}
       >
         <img
           src="logo-no-bg.png"
