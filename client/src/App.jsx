@@ -16,7 +16,16 @@ import {
 const PrivateRoute = ({ isAuthenticated, ...props }) => {
   const token = sessionStorage.getItem("accessToken");
   return (
-    <>{isAuthenticated && token ? <Outlet /> : <Navigate to="/signup" />}</>
+    <>
+      {isAuthenticated && token ? (
+        <>
+          <Navbar />
+          <Outlet />
+        </>
+      ) : (
+        <Navigate to="/signup" />
+      )}
+    </>
   );
 };
 
@@ -25,7 +34,6 @@ function App() {
 
   return (
     <>
-      <Navbar isAuthenticated={isAuthenticated} />
       <DataProvider>
         <BrowserRouter>
           <Routes>

@@ -100,105 +100,110 @@ function Signup({ isUserAuthenticated, type }) {
   };
 
   return (
-    <div className="rounded-2xl shadow-lg shadow-black border-black m-8 md:mx-auto md:my-14  md:p-16 p-6 concert-one-regular flex flex-col items-center justify-start md:text-4xl text-2xl w-fit h-full">
-      <img
-        src="logo-no-bg.png"
-        alt="Fouxy"
-        className="w-16 h-16 md:w-24 md:h-24"
-      />
-      <form className="flex flex-col justify-center">
-        {accState === "signup" ? (
-          <>
-            <label htmlFor="name" className="">
-              Name:
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={signup.name}
-              onChange={(e) => onInputChange(e)}
-              className="rounded-lg mt-2 md:mt-4 px-2 pb-2 border border-solid border-gray-500  "
-            />
-
-            <label htmlFor="username" className="mt-2">
-              Username:
-            </label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              value={signup.username}
-              onChange={(e) => onInputChange(e)}
-              className="rounded-lg mt-2 md:mt-4 px-2 pb-2 border border-solid border-gray-500  "
-            />
-
-            <label htmlFor="password">Password:</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={signup.password}
-              onChange={(e) => onInputChange(e)}
-              className="rounded-lg mt-2 md:mt-4 px-2 pb-2 border border-solid border-gray-500"
-            />
-
-            <label htmlFor="confirm_password">Confirm Password: </label>
-            <input
-              type="password"
-              id="confirm_password"
-              name="confirm_password"
-              value={signup.confirm_password}
-              onChange={(e) => onInputChange(e)}
-              className="rounded-lg mt-2 md:mt-4 px-2 pb-2 border border-solid border-gray-500"
-            />
-
-            {error && <p className="text-red-500 text-base">{error}</p>}
-            <div className="flex flex-col items-center mt-3 gap-2">
-              <Button text="Signup" onClicked={(e) => signupUser(e)} />
-
-              <span className="text-xl md:text-3xl text-white">OR</span>
-              <Button
-                text="Already have an account?"
-                onClicked={(e) => toggleAccState(e)}
+    <div className="flex justify-center pt-24">
+      <div
+        className="rounded-2xl shadow-lg shadow-black border-black md:p-16 p-6 concert-one-regular flex flex-col items-center justify-start md:text-4xl text-2xl w-fit h-full"
+        style={{backgroundColor: "#ff9568"}}
+      >
+        <img
+          src="logo-no-bg.png"
+          alt="Fouxy"
+          className="w-16 h-16 md:w-24 md:h-24"
+        />
+        <form className="flex flex-col justify-center">
+          {accState === "signup" ? (
+            <>
+              <label htmlFor="name" className="">
+                Name:
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={signup.name}
+                onChange={(e) => onInputChange(e)}
+                className="rounded-lg mt-2 md:mt-4 px-2 pb-2 border border-solid border-gray-500  "
               />
-            </div>
-          </>
-        ) : (
-          <>
-            <label htmlFor="username" className="mt-2">
-              Username:
-            </label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              value={login.username}
-              onChange={(e) => onValueChange(e)}
-              className="rounded-lg mt-2 md:mt-4 px-2 pb-2 border border-solid border-gray-500  "
-            />
 
-            <label htmlFor="password">Password:</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={login.password}
-              onChange={(e) => onValueChange(e)}
-              className="rounded-lg mt-2 md:mt-4 px-2 pb-2 border border-solid border-gray-500"
-            />
-            {error && <p className="text-red-500 text-base">{error}</p>}
-            <div className="flex flex-col items-center justify-center mt-3 md:mt-5 gap-2 md:gap-5">
-              <Button text="Login" onClicked={(e) => loginUser(e)} />
-              <span className="text-xl md:text-3xl text-white">OR</span>
-              <Button
-                text="Don't have an account?"
-                onClicked={(e) => toggleAccState(e)}
+              <label htmlFor="username" className="mt-2">
+                Username:
+              </label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                value={signup.username}
+                onChange={(e) => onInputChange(e)}
+                className="rounded-lg mt-2 md:mt-4 px-2 pb-2 border border-solid border-gray-500  "
               />
-            </div>
-          </>
-        )}
-      </form>
+
+              <label htmlFor="password">Password:</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={signup.password}
+                onChange={(e) => onInputChange(e)}
+                className="rounded-lg mt-2 md:mt-4 px-2 pb-2 border border-solid border-gray-500"
+              />
+
+              <label htmlFor="confirm_password">Confirm Password: </label>
+              <input
+                type="password"
+                id="confirm_password"
+                name="confirm_password"
+                value={signup.confirm_password}
+                onChange={(e) => onInputChange(e)}
+                className="rounded-lg mt-2 md:mt-4 px-2 pb-2 border border-solid border-gray-500"
+              />
+
+              {error && <p className="text-red-500 text-base">{error}</p>}
+              <div className="flex flex-col items-center mt-3 gap-2">
+                <Button text="Signup" onClicked={signupUser} />
+
+                <span className="text-xl md:text-3xl text-white">OR</span>
+                <Button
+                  text="Already have an account?"
+                  onClicked={toggleAccState}
+                />
+              </div>
+            </>
+          ) : (
+            <>
+              <label htmlFor="username" className="mt-2">
+                Username:
+              </label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                value={login.username}
+                onChange={(e) => onValueChange(e)}
+                className="rounded-lg mt-2 md:mt-4 px-2 pb-2 border border-solid border-gray-500  "
+              />
+
+              <label htmlFor="password">Password:</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={login.password}
+                onChange={(e) => onValueChange(e)}
+                className="rounded-lg mt-2 md:mt-4 px-2 pb-2 border border-solid border-gray-500"
+              />
+              {error && <p className="text-red-500 text-base">{error}</p>}
+              <div className="flex flex-col items-center justify-center mt-3 md:mt-5 gap-2 md:gap-5">
+                <Button text="Login" onClicked={loginUser} />
+                <span className="text-xl md:text-3xl text-white">OR</span>
+                <Button
+                  text="Don't have an account?"
+                  onClicked={toggleAccState}
+                />
+              </div>
+            </>
+          )}
+        </form>
+      </div>
     </div>
   );
 }

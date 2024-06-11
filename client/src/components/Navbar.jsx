@@ -1,11 +1,22 @@
 import React, { useState } from "react";
 import { Button } from "./Button";
 
-const Navbar = ({ isAuthenticated }) => {
+const Navbar = () => {
   const [showDropDown, setShowDropDown] = useState(false);
 
   const showDropDownFunc = () => {
     setShowDropDown(!showDropDown);
+  };
+
+  const buttonBorderFunc = (e) => {
+    e.target.style.border = "1px solid white";
+    e.target.style.borderRadius = "20%";
+    e.target.style.padding = "3px";
+  };
+
+  const buttonBorderCollapseFunc = (e) => {
+    e.target.style.border = "none";
+    e.target.style.padding = "0";
   };
 
   const hometab = () => (
@@ -20,36 +31,30 @@ const Navbar = ({ isAuthenticated }) => {
     </>
   );
 
-  const logintab = () => (
-    <>
-      <Button type={true} className="text-white" text="Login" href="/login" />
-
-      <Button type={true} className="text-white" text="Signup" href="/signup" />
-    </>
-  );
-
   return (
     <nav className="bg-color-navbar flex-col concert-one-regular py-4">
       <div className="flex justify-between items-center text-4xl md:px-16 px-8">
-        <Button href="/" className="">
+        <Button type={true} href="/" className="">
           <img src="logo-no-bg.png" alt="Fouxy" className="w-16 h-16" />
         </Button>
-        <Button type={true} href="/" className="md:hidden block w-10 h-10">
+        <Button className="md:hidden block w-8 h-8">
           <img
             src="hamburger.png"
             alt="Menu"
+            onMouseOver={buttonBorderFunc}
+            onMouseOut={buttonBorderCollapseFunc}
             onClick={showDropDownFunc}
             className="cursor-pointer"
           />
         </Button>
         <div className="hidden md:flex justify-center md:gap-10 gap-2 h-16">
-          {isAuthenticated ? hometab() : logintab()}
+          {hometab()}
         </div>
       </div>
 
       {showDropDown && (
         <div className="flex flex-col items-start gap-2 mx-10 text-xl">
-          {isAuthenticated ? hometab() : logintab()}
+          {hometab()}
         </div>
       )}
     </nav>

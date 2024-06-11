@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const buttonRiseFunc = (e) => {
   e.target.style.transform = "scale(1.1)";
@@ -16,17 +16,25 @@ export const Button = ({
   className,
   children,
 }) => {
+  const navigate = useNavigate();
+  const navigateTo = (e) => {
+    if (href === "/signup" || href === "/login") sessionStorage.clear();
+    e.preventDefault();
+    if (onClicked) (e) => onClicked(e);
+    navigate(href);
+  };
   return type ? (
-    <a
+    <Link
       className={className}
-      onClick={onClicked}
+      onClick={(e) => navigateTo(e)}
       onMouseEnter={(e) => buttonRiseFunc(e)}
       onMouseLeave={(e) => buttonFallFunc(e)}
       key="linkButton"
+      to={href}
     >
       {children}
       {text}
-    </a>
+    </Link>
   ) : (
     <button
       className={className}
