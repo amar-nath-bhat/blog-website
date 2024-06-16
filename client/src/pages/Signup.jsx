@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { API } from "../services/api.js";
 import { DataContext } from "../context/DataProvider.jsx";
-import { Button } from "./Button.jsx";
+import { Button } from "../components/Button.jsx";
 
 const signupInitialValue = {
   name: "",

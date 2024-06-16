@@ -1,10 +1,17 @@
+// imports
 import { useState } from "react";
+
+// Pages/Components
 import Navbar from "./components/Navbar";
-import Signup from "./components/Signup";
-import Home from "./components/Home";
-import About from "./components/About";
-import Blogs from "./components/Blogs";
+import Signup from "./pages/Signup";
+import Home from "./pages/Home";
+import Blogs from "./pages/Blogs";
+import CreateBlog from "./components/CreateBlog";
+
+// Context
 import DataProvider from "./context/DataProvider";
+
+// Router
 import {
   BrowserRouter,
   Routes,
@@ -36,6 +43,8 @@ function App() {
     <>
       <DataProvider>
         <BrowserRouter>
+          <Navbar />
+
           <Routes>
             <Route
               path="/signup"
@@ -56,18 +65,11 @@ function App() {
               }
             />
 
-            <Route
+            {/* <Route
               path="/"
               element={<PrivateRoute isAuthenticated={isAuthenticated} />}
             >
               <Route path="/" element={<Home />} />
-            </Route>
-
-            <Route
-              path="/about"
-              element={<PrivateRoute isAuthenticated={isAuthenticated} />}
-            >
-              <Route path="/about" element={<About />} />
             </Route>
 
             <Route
@@ -76,6 +78,16 @@ function App() {
             >
               <Route path="/blogs" element={<Blogs />} />
             </Route>
+
+            <Route
+              path="/create"
+              element={<PrivateRoute isAuthenticated={isAuthenticated} />}
+            >
+              <Route path="/create" element={<CreateBlog />} />
+            </Route> */}
+            <Route path="/" element={<Home />} />
+            <Route path="/blogs" element={<Blogs />} />
+            <Route path="/create" element={<CreateBlog />} />
           </Routes>
         </BrowserRouter>
       </DataProvider>

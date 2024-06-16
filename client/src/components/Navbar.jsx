@@ -11,7 +11,7 @@ const Navbar = () => {
   const buttonBorderFunc = (e) => {
     e.target.style.border = "1px solid white";
     e.target.style.borderRadius = "20%";
-    e.target.style.padding = "3px";
+    e.target.style.padding = "4px";
   };
 
   const buttonBorderCollapseFunc = (e) => {
@@ -23,9 +23,9 @@ const Navbar = () => {
     <>
       <Button type={true} className="text-white" text="Home" href="/" />
 
-      <Button type={true} className="text-white" text="About" href="/about" />
-
       <Button type={true} className="text-white" text="Blogs" href="/blogs" />
+
+      <Button type={true} className="text-white" text="Create" href="/create" />
 
       <Button type={true} className="text-white" text="Logout" href="/signup" />
     </>

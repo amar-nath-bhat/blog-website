@@ -11,8 +11,12 @@ const BlogPost = ({ heading, description, category, author, likes, img }) => {
   };
   return (
     <>
-      <section className="shadow-lg bg-color-default shadow-black rounded-lg border-2 border-black p-3 md:w-1/3 w-full">
-        <img src={img} className="rounded-t-lg w-full border-2 border-black" />
+      <section className="shadow-lg bg-color-default shadow-black rounded-lg p-3 w-full flex flex-col gap-3">
+        <img
+          className="h-[30vh] md:h-[50vh] w-full rounded-lg shadow-lg object-cover object-center"
+          src="blog-pic.webp"
+          alt="blog image"
+        />
         <div className="flex flex-col gap-1">
           <h1 className="text-3xl">{heading}</h1>
           <hr className="border-black mt-1" />
