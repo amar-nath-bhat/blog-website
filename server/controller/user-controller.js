@@ -85,4 +85,11 @@ const loginUser = async (req, res) => {
   }
 };
 
-module.exports = { signupUser, loginUser };
+const logoutUser = async (request, response) => {
+  const token = request.body.token;
+  await Token.deleteOne({ token: token });
+
+  response.status(204).json({ msg: "logout successfull" });
+};
+
+module.exports = { signupUser, loginUser, logoutUser };

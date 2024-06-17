@@ -3,15 +3,15 @@ import {
   SERVICE_URLS,
   API_NOTIFICATION_MESSAGES,
 } from "../constants/config.js";
-import { getType } from "../utils/common-utils.js";
+import { getType, getAccessToken } from "../utils/common-utils.js";
 
 const API_URL = "http://localhost:5000";
 
 const axiosInstance = axios.create({
   baseURL: API_URL,
-  timeout: 10000,
+  timeout: 100000,
   headers: {
-    "Content-Type": "application/json",
+    Accept: "application/json, form-data",
   },
 });
 
@@ -93,9 +93,9 @@ for (const [key, value] of Object.entries(SERVICE_URLS)) {
       url: value.url,
       data: value.method === "DELETE" ? "" : body,
       responseType: value.responseType,
-      // headers: {
-      //   authorization: getAccessToken(),
-      // },
+      headers: {
+        authorization: getAccessToken(),
+      },
       TYPE: getType(value, body),
       onUploadProgress: function (progressEvent) {
         if (showUploadProgress) {

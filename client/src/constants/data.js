@@ -5,3 +5,31 @@ export const categories = [
   { id: 4, type: "Tech" },
   { id: 5, type: "Fashion" },
 ];
+
+export const blogs = [
+  {
+    heading: "Blog 1",
+    description: "Description 1",
+    category: "Category 1",
+    author: "Author 1",
+    likes: 10,
+    img: "blog-pic.webp",
+  },
+
+  {
+    heading: "Blog 1",
+    description: "Description 1",
+    category: "Category 1",
+    author: "Author 1",
+    likes: 10,
+    img: "blog-pic.webp",
+  },
+  {
+    heading: "Blog 1",
+    description: "Description 1",
+    category: "Category 1",
+    author: "Author 1",
+    likes: 10,
+    img: "blog-pic.webp",
+  },
+];

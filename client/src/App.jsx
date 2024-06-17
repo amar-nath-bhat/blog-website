@@ -6,7 +6,7 @@ import Navbar from "./components/Navbar";
 import Signup from "./pages/Signup";
 import Home from "./pages/Home";
 import Blogs from "./pages/Blogs";
-import CreateBlog from "./components/CreateBlog";
+import CreateBlog from "./pages/CreateBlog";
 
 // Context
 import DataProvider from "./context/DataProvider";
@@ -43,7 +43,7 @@ function App() {
     <>
       <DataProvider>
         <BrowserRouter>
-          <Navbar />
+          {/* <Navbar /> */}
 
           <Routes>
             <Route
@@ -65,7 +65,7 @@ function App() {
               }
             />
 
-            {/* <Route
+            <Route
               path="/"
               element={<PrivateRoute isAuthenticated={isAuthenticated} />}
             >
@@ -84,10 +84,10 @@ function App() {
               element={<PrivateRoute isAuthenticated={isAuthenticated} />}
             >
               <Route path="/create" element={<CreateBlog />} />
-            </Route> */}
-            <Route path="/" element={<Home />} />
+            </Route>
+            {/* <Route path="/" element={<Home />} />
             <Route path="/blogs" element={<Blogs />} />
-            <Route path="/create" element={<CreateBlog />} />
+            <Route path="/create" element={<CreateBlog />} /> */}
           </Routes>
         </BrowserRouter>
       </DataProvider>

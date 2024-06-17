@@ -1,31 +1,17 @@
 import BlogPost from "../components/BlogPost";
 import { Link } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
-
+import { blogs } from "../constants/data";
 const Home = () => {
-  const blogs = [
-    {
-      heading: "Blog 1",
-      description: "Description 1",
-      category: "Category 1",
-      author: "Author 1",
-      likes: 10,
-      img: "blog-pic.webp",
-    },
-  ];
-
   return (
     <div className="px-5 md:px-10 pb-10 flex flex-col gap-5 md:gap-10">
       <section className="flex justify-center">
-        <div className="mt-3 concert-one-regular uppercase absolute text-white flex flex-col justify-center items-center gap-3">
+        <div className="mt-3 concert-one-regular uppercase absolute text-white flex flex-col justify-center items-center gap-3 ">
           <h1 className="text-[35px] md:text-[60px] text-deep-orange-400">
             Welcome to Fouxy!
           </h1>
           <Link to="/blogs">
-            <Button
-              className="text-[15px] md:text-[20px] text-orange-300 concert-one-regular pb-4 md:pb-5"
-              color=""
-            >
+            <Button className="text-[15px] md:text-[20px] text-orange-300 concert-one-regular pb-4 md:pb-5">
               Start Blogging
             </Button>
           </Link>
@@ -37,8 +23,8 @@ const Home = () => {
           alt="blog image"
         />
       </section>
-      <section className="grid grid-cols-1 lg:px-72 px-7">
-        <div className="col-span-12 mt-3 md:mt-0">
+      <section className="md:px-7 lg:px-72">
+        <div className="mt-3 md:mt-0">
           <h1 className="text-4xl concert-one-regular uppercase">Top Blogs</h1>
           <div className="grid grid-cols-1 gap-10 blog-post-content-font mt-5 w-full">
             {blogs.map((blog, index) => (

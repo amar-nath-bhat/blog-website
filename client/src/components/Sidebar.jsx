@@ -11,7 +11,7 @@ const Sidebar = ({ className }) => {
   };
   return (
     <div
-      className={`${className} relative concert-one-regular rounded-lg border-2 border-black   shadow-md shadow-black w-full overflow-hidden h-fit`}
+      className={`${className} relative concert-one-regular rounded-lg border-2 border-black shadow-md shadow-black w-full md:w-1/3 overflow-hidden h-fit`}
     >
       <table className="w-full">
         <thead className="text-xs uppercase bg-color-default  ">
