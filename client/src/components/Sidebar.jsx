@@ -32,11 +32,8 @@ const Sidebar = ({ className }) => {
         </thead>
         <tbody className={`${showDropDown ? "" : "collapse"}`}>
           {categories.map((category) => (
-            <tr className="bg-color-default">
-              <td
-                className="px-6 py-4 text-xl border-black border-b "
-                key={category.id}
-              >
+            <tr className="bg-color-default" key={category.id}>
+              <td className="px-6 py-4 text-xl border-black border-b ">
                 <button>{category.type}</button>
               </td>
             </tr>

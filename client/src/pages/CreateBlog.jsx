@@ -29,17 +29,16 @@ const CreateBlog = () => {
       if (file) {
         const data = new FormData();
         data.append("name", file.name);
-        console.log(file);
+        // console.log(file);
         data.append("file", file);
-        console.log(data);
-
+        // console.log(data);
         try {
-          console.log("Uploading file:", file);
-          for (let pair of data.entries()) {
-            console.log(pair[0] + ", " + pair[1]);
-          }
+          // console.log("Uploading file:", file);
+          // for (let pair of data.entries()) {
+          //   console.log(pair[0] + ", " + pair[1]);
+          // }
           const response = await API.uploadImage(data);
-          console.log(response);
+
           post.picture = response.data;
         } catch (e) {
           console.log(e);

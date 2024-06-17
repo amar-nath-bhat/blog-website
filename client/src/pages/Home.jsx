@@ -1,8 +1,17 @@
 import BlogPost from "../components/BlogPost";
 import { Link } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
-import { blogs } from "../constants/data";
+import { useState, useEffect } from "react";
+import { API } from "../services/api";
 const Home = () => {
+  const [posts, setPosts] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      let res = await API.getAllPosts();
+      if (res.isSuccess) setPosts(res.data);
+    };
+    fetchData();
+  }, []);
   return (
     <div className="px-5 md:px-10 pb-10 flex flex-col gap-5 md:gap-10">
       <section className="flex justify-center">
@@ -27,16 +36,9 @@ const Home = () => {
         <div className="mt-3 md:mt-0">
           <h1 className="text-4xl concert-one-regular uppercase">Top Blogs</h1>
           <div className="grid grid-cols-1 gap-10 blog-post-content-font mt-5 w-full">
-            {blogs.map((blog, index) => (
+            {posts.map((post, index) => (
               <div key={index}>
-                <BlogPost
-                  heading={blog.heading}
-                  description={blog.description}
-                  category={blog.category}
-                  author={blog.author}
-                  likes={blog.likes}
-                  img={blog.img}
-                />
+                <BlogPost post={post} />
               </div>
             ))}
           </div>

@@ -9,7 +9,7 @@ const storage = new GridFsStorage.GridFsStorage({
     const match = ["image/png", "image/jpg"];
 
     if (match.indexOf(file.mimeType) === -1)
-      return `${Date.now()}-blog-${file.name}`;
+      return `${Date.now()}-blog-${file.originalname}`;
 
     return {
       bucketName: "photos",

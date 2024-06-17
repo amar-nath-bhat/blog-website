@@ -3,9 +3,9 @@ const Post = require("../models/post");
 const createPost = async (request, response) => {
   try {
     const post = await new Post(request.body);
-    post.save();
-
-    response.status(200).json("Post saved successfully");
+    const res = post.save();
+    if (res) response.status(200).json("Post saved successfully");
+    else response.status(500).json("Post not saved");
   } catch (error) {
     response.status(500).json(error);
   }

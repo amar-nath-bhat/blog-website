@@ -9,7 +9,7 @@ const API_URL = "http://localhost:5000";
 
 const axiosInstance = axios.create({
   baseURL: API_URL,
-  timeout: 100000,
+  timeout: 10000,
   headers: {
     Accept: "application/json, form-data",
   },
