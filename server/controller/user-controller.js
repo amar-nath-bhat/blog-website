@@ -74,7 +74,7 @@ const loginUser = async (req, res) => {
       await newToken.save();
 
       // Return the tokens to the client
-      return res.status(200).json({ accessToken, refreshToken });
+      return res.status(200).json({ accessToken, refreshToken, user: userObj });
     } else {
       console.error("Invalid password for user:", req.body.username);
       return res.status(400).json({ msg: "Invalid password" });

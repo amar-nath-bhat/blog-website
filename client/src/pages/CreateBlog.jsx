@@ -2,9 +2,9 @@ import React from "react";
 import { Button } from "@material-tailwind/react";
 import { useNavigate, Link } from "react-router-dom";
 import { useState, useContext, useEffect } from "react";
-import { DataContext } from "../context/DataProvider";
 import { categories } from "../constants/data";
 import { API } from "../services/api";
+import { useSelector } from "react-redux";
 
 const initialPost = {
   title: "",
@@ -17,10 +17,9 @@ const initialPost = {
 
 const CreateBlog = () => {
   const navigate = useNavigate();
-
   const [post, setPost] = useState(initialPost);
   const [file, setFile] = useState("");
-  const { account } = useContext(DataContext);
+  const auth = useSelector((state) => state.auth);
 
   const url_image = file ? URL.createObjectURL(file) : "blog.avif";
 
@@ -46,7 +45,7 @@ const CreateBlog = () => {
       }
     };
     getImage();
-    post.username = account.username;
+    post.username = auth.username;
   }, [file]);
 
   const savePost = async () => {
@@ -57,6 +56,7 @@ const CreateBlog = () => {
 
   const handleChange = (e) => {
     setPost({ ...post, [e.target.name]: e.target.value });
+    console.log(post);
   };
 
   return (

@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { API } from "../services/api.js";
 import { DataContext } from "../context/DataProvider.jsx";
 import { Button } from "../components/Button.jsx";
+import { useDispatch, useSelector } from "react-redux";
+import { _login, _logout } from "../app/authSlice.js";
 
 const signupInitialValue = {
   name: "",
@@ -20,6 +22,9 @@ function Signup({ isUserAuthenticated, type }) {
   const [signup, setSignup] = useState(signupInitialValue);
   const [login, setLogin] = useState(loginInitialValue);
   const [error, showError] = useState("");
+
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
 
   useEffect(() => {
     showError(false);
@@ -82,16 +87,24 @@ function Signup({ isUserAuthenticated, type }) {
           "refreshToken",
           `Bearer ${response.data.refreshToken}`
         );
-        setAccount({
-          name: response.data.name,
-          username: response.data.username,
-        });
+        console.log(response.data);
+        dispatch(
+          _login({
+            username: response.data.user.username,
+            name: response.data.user.name,
+          })
+        );
+        // setAccount({
+        //   name: response.data.name,
+        //   username: response.data.username,
+        // });
 
         isUserAuthenticated(true);
         setLogin(loginInitialValue);
         navigate("/");
       } else {
         showError(response.message);
+        dispatch(_logout());
       }
     } catch (e) {
       console.log(e.message);
