@@ -29,10 +29,12 @@ export const SERVICE_URLS = {
   uploadImage: { url: "/file/upload", method: "POST" },
   createPost: { url: "/create", method: "POST" },
   getAllPosts: { url: "/posts", method: "GET", params: true },
-  
+
   getPostById: { url: "/post", method: "GET", query: true },
   deletePost: { url: "/delete", method: "DELETE", query: true },
   updatePost: { url: "/update", method: "PUT", query: true },
+  archivePost: { url: "/archive", method: "PUT", query: true },
+  unArchivePost: { url: "/unarchive", method: "PUT", query: true },
 
   archivePost: { url: "/archive", method: "PUT", query: true },
   getRefreshToken: { url: "/token", method: "POST" },

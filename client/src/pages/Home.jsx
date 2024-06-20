@@ -47,12 +47,16 @@ const Home = () => {
             <SearchBar />
             <Filter />
           </div>
-          <div className="grid grid-cols-1 gap-10 blog-post-content-font w-full">
-            {posts.map((post, index) => (
-              <div key={index}>
-                <BlogPost post={post} />
-              </div>
-            ))}
+          <div className="grid grid-cols-1 gap-10 blog-post-content-font w-full text-center">
+            {posts.length ? (
+              posts.map((post, index) => (
+                <div key={index}>
+                  <BlogPost post={post} />
+                </div>
+              ))
+            ) : (
+              <div className="text-red-500 text-4xl">No Posts Found</div>
+            )}
           </div>
         </div>
       </section>

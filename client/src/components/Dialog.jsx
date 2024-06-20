@@ -19,6 +19,7 @@ function DialogDefault({ handler, children, body, className }) {
   return (
     <>
       <button
+        title={body}
         onClick={handleOpen}
         variant="gradient"
         className={`rounded-full concert-one-regular text-white bg-black p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 text-lg md:text-2xl ${className}`}

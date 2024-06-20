@@ -49,11 +49,13 @@ const getPost = async (request, response) => {
 const getAllPosts = async (request, response) => {
   let username = request.query.username;
   let category = request.query.category;
+  let archived = request.query.archived;
   let posts;
   try {
     if (username) posts = await Post.find({ username: username });
-    else if (category) posts = await Post.find({ categories: category });
-    else posts = await Post.find({});
+    else if (category) posts = await Post.find({ category: category });
+    else if (archived) posts = await Post.find({ archived: true });
+    else posts = await Post.find({ archived: false });
 
     response.status(200).json(posts);
   } catch (error) {
@@ -61,4 +63,48 @@ const getAllPosts = async (request, response) => {
   }
 };
 
-module.exports = { createPost, updatePost, deletePost, getPost, getAllPosts };
+const archivePost = async (request, response) => {
+  try {
+    const post = await Post.findById(request.params.id);
+
+    if (!post) {
+      response.status(404).json({ msg: "Post not found" });
+    }
+
+    await Post.findByIdAndUpdate(request.params.id, {
+      $set: { archived: true },
+    });
+
+    response.status(200).json("post archived successfully");
+  } catch (error) {
+    response.status(500).json(error);
+  }
+};
+
+const unArchivePost = async (request, response) => {
+  try {
+    const post = await Post.findById(request.params.id);
+
+    if (!post) {
+      response.status(404).json({ msg: "Post not found" });
+    }
+
+    await Post.findByIdAndUpdate(request.params.id, {
+      $set: { archived: false },
+    });
+
+    response.status(200).json("post unarchived successfully");
+  } catch (error) {
+    response.status(500).json(error);
+  }
+};
+
+module.exports = {
+  createPost,
+  updatePost,
+  deletePost,
+  getPost,
+  getAllPosts,
+  archivePost,
+  unArchivePost,
+};

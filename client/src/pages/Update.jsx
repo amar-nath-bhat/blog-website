@@ -14,6 +14,7 @@ const initialPost = {
   category: "All",
   createdDate: new Date(),
   likes: 0,
+  archived: false,
 };
 
 const Update = () => {

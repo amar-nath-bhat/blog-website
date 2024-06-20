@@ -35,13 +35,13 @@ const BlogPost = ({ post }) => {
           alt="blog image"
         />
       )}
-      <div className="flex flex-col gap-1 concert-one-regular">
-        <h1 className="text-3xl">{post.title}</h1>
+      <div className="flex flex-col gap-1 concert-one-regular ">
+        <h1 className="text-3xl text-start">{post.title}</h1>
         <hr className="border-black mt-1" />
         <div className="text-xl">
           <h2 className="mt-2 w-fit ">{addEllipsis(post.description, 100)}</h2>
           <div className="flex flex-col gap-2">
-            <span>Author: {post.username}</span>
+            <span className="text-start">Author: {post.username}</span>
             <div className="flex items-center justify-between">
               <div className="flex gap-1">
                 <img

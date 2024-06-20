@@ -36,7 +36,14 @@ const Post = () => {
     navigate(`/update/${post._id}`);
   };
 
-  const handleArchive = () => {};
+  const handleArchive = async () => {
+    await API.archivePost(post._id);
+    navigate("/");
+  };
+  const handleUnArchive = async () => {
+    await API.unArchivePost(post._id);
+    navigate("/");
+  };
 
   return (
     <div className="px-5 md:px-10 pb-10 flex flex-col gap-5 md:gap-10">
@@ -46,9 +53,16 @@ const Post = () => {
         alt="blog image"
       />
       <section className="flex flex-col gap-2 md:gap-5 justify-center concert-one-regular bg-color-default p-5 md:p-10 rounded-lg shadow-lg shadow-blue-gray-900/50 border-2 border-black h-full">
-        <div className="flex flex-col md:flex-row items-start justify-between gap-3">
-          <h1 className="text-5xl ">{post.title}</h1>
-          <div className="flex gap-5 md:gap-10 items-center justify-between">
+        <div className="flex flex-col md:flex-row items-center justify-between md:gap-10 gap-3">
+          <div className="flex md:justify-start justify-between gap-10 md:w-1/2 items-center w-full">
+            <h1 className="text-5xl ">{post.title}</h1>
+            {post.archived && (
+              <span className="bg-red-300 text-black rounded-lg py-2 px-3 pb-3 mt-3">
+                Archived
+              </span>
+            )}
+          </div>
+          <div className="flex gap-5 md:gap-10 items-center justify-evenly md:w-1/2">
             <h2 className="text-xl">Posted on: {date}</h2>
             {auth.username === post.username && (
               <>
@@ -88,22 +102,41 @@ const Post = () => {
                     />
                   </svg>
                 </button>
-                <DialogDefault handler={handleArchive} body="Archive">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="md:size-5 size-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0-3-3m3 3 3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"
-                    />
-                  </svg>
-                </DialogDefault>
+                {post.archived ? (
+                  <DialogDefault handler={handleUnArchive} body="Un-Archive">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      className="size-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m6 4.125 2.25 2.25m0 0 2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"
+                      />
+                    </svg>
+                  </DialogDefault>
+                ) : (
+                  <DialogDefault handler={handleArchive} body="Archive">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      className="md:size-5 size-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0-3-3m3 3 3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"
+                      />
+                    </svg>
+                  </DialogDefault>
+                )}
               </>
             )}
           </div>

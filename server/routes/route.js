@@ -43,6 +43,19 @@ router.post(
   upload.single("file"),
   image_controller.uploadImage
 );
+
 router.get("/file/:filename", image_controller.getImage);
+
+router.put(
+  "/archive/:id",
+  jwt_controller.authenticateToken,
+  post_controller.archivePost
+);
+
+router.put(
+  "/unarchive/:id",
+  jwt_controller.authenticateToken,
+  post_controller.unArchivePost
+);
 
 module.exports = router;
