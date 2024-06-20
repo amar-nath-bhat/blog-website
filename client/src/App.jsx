@@ -7,6 +7,8 @@ import Signup from "./pages/Signup";
 import Home from "./pages/Home";
 import Blogs from "./pages/Blogs";
 import CreateBlog from "./pages/CreateBlog";
+import Post from "./pages/Post";
+import Update from "./pages/Update";
 
 // Context
 import DataProvider from "./context/DataProvider";
@@ -85,9 +87,20 @@ function App() {
             >
               <Route path="/create" element={<CreateBlog />} />
             </Route>
-            {/* <Route path="/" element={<Home />} />
-            <Route path="/blogs" element={<Blogs />} />
-            <Route path="/create" element={<CreateBlog />} /> */}
+
+            <Route
+              path="/post/:id"
+              element={<PrivateRoute isAuthenticated={isAuthenticated} />}
+            >
+              <Route path="/post/:id" element={<Post />} />
+            </Route>
+
+            <Route
+              path="/update/:id"
+              element={<PrivateRoute isAuthenticated={isAuthenticated} />}
+            >
+              <Route path="/update/:id" element={<Update />} />
+            </Route>
           </Routes>
         </BrowserRouter>
       </DataProvider>

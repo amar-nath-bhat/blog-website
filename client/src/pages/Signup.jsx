@@ -53,7 +53,7 @@ function Signup({ isUserAuthenticated, type }) {
   const signupUser = async (e) => {
     e.preventDefault();
     try {
-      console.log(signup);
+      // console.log(signup);
       let response = await API.userSignup(signup);
       console.log(response);
       if (response.isSuccess) {
@@ -87,7 +87,7 @@ function Signup({ isUserAuthenticated, type }) {
           "refreshToken",
           `Bearer ${response.data.refreshToken}`
         );
-        console.log(response.data);
+        // console.log(response.data);
         dispatch(
           _login({
             username: response.data.user.username,

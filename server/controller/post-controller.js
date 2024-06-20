@@ -29,13 +29,10 @@ const updatePost = async (request, response) => {
 
 const deletePost = async (request, response) => {
   try {
-    const post = await Post.findById(request.params.id);
-
-    await post.delete();
-
+    const post = await Post.findByIdAndDelete(request.params.id);
     response.status(200).json("post deleted successfully");
   } catch (error) {
-    response.status(500).json(error);
+    response.status(500).json(error.msg);
   }
 };
 

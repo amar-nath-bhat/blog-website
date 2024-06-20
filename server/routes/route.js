@@ -16,16 +16,17 @@ router.post(
   jwt_controller.authenticateToken,
   post_controller.createPost
 );
-router.put(
-  "/update/:id",
-  jwt_controller.authenticateToken,
-  post_controller.updatePost
-);
 router.delete(
   "/delete/:id",
   jwt_controller.authenticateToken,
   post_controller.deletePost
 );
+router.put(
+  "/update/:id",
+  jwt_controller.authenticateToken,
+  post_controller.updatePost
+);
+
 router.get(
   "/post/:id",
   jwt_controller.authenticateToken,

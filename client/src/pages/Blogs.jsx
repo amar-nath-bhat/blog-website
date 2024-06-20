@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
-import Sidebar from "../components/Sidebar";
+import SearchBar from "../components/SearchBar";
+import Filter from "../components/Filter";
 import BlogPost from "../components/BlogPost";
 import { API } from "../services/api";
+import { useSelector } from "react-redux";
 
 const Blogs = () => {
   const [posts, setPosts] = useState([]);
+  const auth = useSelector((state) => state.auth);
   useEffect(() => {
     const fetchData = async () => {
-      let res = await API.getAllPosts();
+      let res = await API.getAllPosts({ username: auth.username });
       if (res.isSuccess) setPosts(res.data);
     };
     fetchData();
@@ -35,9 +38,13 @@ const Blogs = () => {
           alt="blog image"
         />
       </section>
-      <section className="flex md:flex-row lg:flex-row flex-col gap-10">
-        <Sidebar className="" />
-        <div className="grid grid-cols-1 gap-10 blog-post-content-font w-full">
+      <section className="flex flex-col gap-10 justify-center items-center">
+        <h1 className="text-4xl concert-one-regular uppercase">Your Blogs</h1>
+        <div className="w-full md:w-2/3 flex justify-between gap-5 md:gap-10">
+          <SearchBar />
+          <Filter />
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 blog-post-content-font w-full">
           {posts?.length ? (
             posts.map((post, index) => (
               <div key={index}>

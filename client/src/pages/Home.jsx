@@ -43,7 +43,7 @@ const Home = () => {
       <section className="md:px-7 lg:px-72">
         <div className="mt-3 md:mt-0 flex flex-col gap-5 justify-center items-center">
           <h1 className="text-4xl concert-one-regular uppercase">Top Blogs</h1>
-          <div className="w-full flex flex-col md:flex-row justify-between gap-10">
+          <div className="w-full flex flex-row justify-between md:gap-10 gap-5 items-center">
             <SearchBar />
             <Filter />
           </div>
