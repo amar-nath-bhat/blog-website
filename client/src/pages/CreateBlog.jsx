@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { categories } from "../constants/data";
 import { API } from "../services/api";
 import { useSelector } from "react-redux";
+import DialogDefault from "../components/Dialog";
 
 const initialPost = {
   title: "",
@@ -115,12 +116,9 @@ const CreateBlog = () => {
               <option key={index}>{category.type}</option>
             ))}
           </select>
-          <button
-            onClick={() => savePost()}
-            className="bg-black text-white font-extrabold px-5 rounded-xl py-2 text-xl md:text-2xl focus:outline-none focus:ring-2 focus:ring-blue-300"
-          >
+          <DialogDefault handler={savePost} body="Publish" className="pb-4">
             Publish
-          </button>
+          </DialogDefault>
         </div>
         <textarea
           placeholder="Write your blog...."
