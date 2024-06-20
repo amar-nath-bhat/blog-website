@@ -58,4 +58,10 @@ router.put(
   post_controller.unArchivePost
 );
 
+router.get(
+  "/search",
+  jwt_controller.authenticateToken,
+  post_controller.searchPosts
+);
+
 module.exports = router;

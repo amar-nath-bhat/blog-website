@@ -92,6 +92,7 @@ for (const [key, value] of Object.entries(SERVICE_URLS)) {
       method: value.method,
       url: value.url,
       data: value.method === "DELETE" ? {} : body,
+      params: value.url === "/search" ? body.search : {},
       responseType: value.responseType,
       headers: {
         authorization: getAccessToken(),

@@ -49,7 +49,7 @@ const Post = () => {
     <div className="px-5 md:px-10 pb-10 flex flex-col gap-5 md:gap-10">
       <img
         className="md:h-[60vh] h-[40vh] w-full rounded-b-lg object-cover object-center shadow-xl shadow-blue-gray-900/50"
-        src={post.picture ? post.picture : "blog-pic.webp"}
+        src={post.picture ? post.picture : "/blog.avif"}
         alt="blog image"
       />
       <section className="flex flex-col gap-2 md:gap-5 justify-center concert-one-regular bg-color-default p-5 md:p-10 rounded-lg shadow-lg shadow-blue-gray-900/50 border-2 border-black h-full">

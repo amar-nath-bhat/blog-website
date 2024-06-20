@@ -18,14 +18,14 @@ function DialogDefault({ handler, children, body, className }) {
   };
   return (
     <>
-      <button
+      <Button
         title={body}
         onClick={handleOpen}
         variant="gradient"
         className={`rounded-full concert-one-regular text-white bg-black p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 text-lg md:text-2xl ${className}`}
       >
         {children || "Open Dialog"}
-      </button>
+      </Button>
       <Dialog open={open} handler={handleOpen}>
         <DialogHeader className="concert-one-regular">
           Warning before performing action.

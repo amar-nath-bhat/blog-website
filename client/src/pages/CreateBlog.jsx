@@ -80,18 +80,20 @@ const CreateBlog = () => {
       <section className="flex flex-col gap-10 justify-evenly bg-color-default p-10 rounded-lg shadow-blue-gray-900/50 shadow-xl border-2 border-black">
         <div className="flex gap-10 flex-col md:flex-row md:justify-center md:items-center">
           <div className="flex flex-row justify-center items-center gap-5 md:w-2/3">
-            <label htmlFor="fileInput">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                x="0px"
-                y="0px"
-                width="40"
-                height="40"
-                viewBox="0 0 50 50"
-              >
-                <path d="M25,2C12.317,2,2,12.317,2,25s10.317,23,23,23s23-10.317,23-23S37.683,2,25,2z M37,26H26v11h-2V26H13v-2h11V13h2v11h11V26z"></path>
-              </svg>
-            </label>
+            <Button className="bg-transparent p-0 " title="Add Image">
+              <label htmlFor="fileInput" className="cursor-pointer">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  x="0px"
+                  y="0px"
+                  width="40"
+                  height="40"
+                  viewBox="0 0 50 50"
+                >
+                  <path d="M25,2C12.317,2,2,12.317,2,25s10.317,23,23,23s23-10.317,23-23S37.683,2,25,2z M37,26H26v11h-2V26H13v-2h11V13h2v11h11V26z"></path>
+                </svg>
+              </label>
+            </Button>
             <input
               type="file"
               id="fileInput"
@@ -117,7 +119,11 @@ const CreateBlog = () => {
               <option key={index}>{category.type}</option>
             ))}
           </select>
-          <DialogDefault handler={savePost} body="Publish" className="pb-4">
+          <DialogDefault
+            handler={savePost}
+            body="Publish"
+            className="pb-4 px-4"
+          >
             Publish
           </DialogDefault>
         </div>

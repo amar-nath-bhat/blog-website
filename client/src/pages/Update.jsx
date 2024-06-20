@@ -122,7 +122,7 @@ const Update = () => {
           <DialogDefault
             handler={updateBlogPost}
             body="Update"
-            className="pb-4"
+            className="pb-4 px-4"
           >
             Update
           </DialogDefault>

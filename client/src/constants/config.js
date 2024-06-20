@@ -35,7 +35,7 @@ export const SERVICE_URLS = {
   updatePost: { url: "/update", method: "PUT", query: true },
   archivePost: { url: "/archive", method: "PUT", query: true },
   unArchivePost: { url: "/unarchive", method: "PUT", query: true },
-
   archivePost: { url: "/archive", method: "PUT", query: true },
   getRefreshToken: { url: "/token", method: "POST" },
+  searchPosts: { url: "/search", method: "GET", query: true },
 };

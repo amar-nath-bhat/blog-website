@@ -20,6 +20,20 @@ const Home = () => {
     fetchData();
   }, []);
 
+  const searchPosts = async (search) => {
+    console.log(search);
+    let res;
+    res = await API.searchPosts({ search: search });
+    if (res.isSuccess) setPosts(res.data);
+  };
+
+  const searchCategory = async (category) => {
+    console.log(category);
+    let res;
+    res = await API.getAllPosts({ category: category, archived: false });
+    if (res.isSuccess) setPosts(res.data);
+  };
+
   return (
     <div className="px-5 md:px-10 pb-10 flex flex-col gap-5 md:gap-10">
       <section className="flex justify-center">
@@ -44,8 +58,8 @@ const Home = () => {
         <div className="mt-3 md:mt-0 flex flex-col gap-5 justify-center items-center">
           <h1 className="text-4xl concert-one-regular uppercase">Top Blogs</h1>
           <div className="w-full flex flex-row justify-between md:gap-10 gap-5 items-center">
-            <SearchBar />
-            <Filter />
+            <SearchBar searchHandle={searchPosts} />
+            <Filter searchHandle={searchCategory} />
           </div>
           <div className="grid grid-cols-1 gap-10 blog-post-content-font w-full text-center">
             {posts.length ? (

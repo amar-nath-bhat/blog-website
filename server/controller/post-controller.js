@@ -17,6 +17,7 @@ const updatePost = async (request, response) => {
 
     if (!post) {
       response.status(404).json({ msg: "Post not found" });
+      return;
     }
 
     await Post.findByIdAndUpdate(request.params.id, { $set: request.body });
@@ -53,7 +54,8 @@ const getAllPosts = async (request, response) => {
   let posts;
   try {
     if (username) posts = await Post.find({ username: username });
-    else if (category) posts = await Post.find({ category: category });
+    else if (category)
+      posts = await Post.find({ category: category, archived: false });
     else if (archived) posts = await Post.find({ archived: true });
     else posts = await Post.find({ archived: false });
 
@@ -87,6 +89,7 @@ const unArchivePost = async (request, response) => {
 
     if (!post) {
       response.status(404).json({ msg: "Post not found" });
+      return;
     }
 
     await Post.findByIdAndUpdate(request.params.id, {
@@ -94,6 +97,29 @@ const unArchivePost = async (request, response) => {
     });
 
     response.status(200).json("post unarchived successfully");
+  } catch (error) {
+    response.status(500).json(error);
+  }
+};
+
+const searchPosts = async (request, response) => {
+  let search = request.query.search;
+  if (!search || typeof search !== "string") {
+    console.error("Invalid search term ", search);
+    getAllPosts(request, response);
+    return;
+  }
+  // console.log(search);
+  try {
+    let posts = await Post.find(
+      {
+        $text: { $search: search },
+        archived: false,
+      },
+      { score: { $meta: "textScore" } }
+    ).sort({ score: { $meta: "textScore" } });
+
+    response.status(200).json(posts);
   } catch (error) {
     response.status(500).json(error);
   }
@@ -107,4 +133,5 @@ module.exports = {
   getAllPosts,
   archivePost,
   unArchivePost,
+  searchPosts,
 };
