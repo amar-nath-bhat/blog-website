@@ -1,8 +1,30 @@
-# React + Vite
+# Creating an API and making API Calls.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+In order to create an API:
 
-Currently, two official plugins are available:
+1. Open the terminal and navigate to the root directory of your client project.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+2. In the `src/constants/config.js` file and under the SERVICE_URLS object create your new API by naming it and providing appropriate method and url along with any params or query.
+
+```javascript
+export const SERVICE_URLS = {
+  newAPI: { url: "/login", method: "POST" },
+  // other apis
+};
+```
+
+3. Make sure to have the coressponding route and controller in the server directory.
+
+4. Now in the required component, import the necessary files and create the function to call the api.
+
+```javascript
+import { API } from "../services/api";
+// other imports
+
+const callApi = async () => {
+  let respose = await API.newAPI();
+  if (response.isSuccess) setData(response.data);
+};
+```
+
+5. You've create a new API.
