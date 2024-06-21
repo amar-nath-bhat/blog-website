@@ -14,7 +14,7 @@ const initialPost = {
   username: "",
   category: "All",
   createdDate: new Date(),
-  likes: 0,
+  likes: [],
   archived: false,
 };
 

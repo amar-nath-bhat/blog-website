@@ -26,8 +26,8 @@ const postSchema = new mongoose.Schema({
     type: Date,
   },
   likes: {
-    type: Number,
-    default: 0,
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    default: [],
   },
   archived: {
     type: Boolean,

@@ -125,6 +125,45 @@ const searchPosts = async (request, response) => {
   }
 };
 
+const likePost = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    const userId = req.query.userId;
+    // Check if the post has already been liked by this user
+    if (post.likes.includes(userId)) {
+      post.likes.pull(userId);
+      await post.save();
+      return res.status(200).json({ msg: "Post Unliked" });
+    }
+
+    post.likes.push(userId);
+    await post.save();
+    return res.status(200).json({ msg: "Post Liked" });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+};
+
+const unlikePost = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    const userId = req.query.userId;
+
+    // Check if the post has not yet been liked by this user
+    if (!post.likes.includes(userId)) {
+      return res.status(400).json({ msg: "Post has not yet been liked" });
+    }
+
+    post.likes.pull(userId);
+    await post.save();
+    res.json(post.likes);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+};
+
 module.exports = {
   createPost,
   updatePost,
@@ -134,4 +173,6 @@ module.exports = {
   archivePost,
   unArchivePost,
   searchPosts,
+  likePost,
+  unlikePost,
 };

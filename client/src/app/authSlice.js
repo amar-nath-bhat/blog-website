@@ -4,6 +4,7 @@ const initialState = {
   status: false,
   username: "",
   name: "",
+  userId: "",
 };
 
 export const authSlice = createSlice({
@@ -14,11 +15,13 @@ export const authSlice = createSlice({
       state.status = true;
       state.username = action.payload.username;
       state.name = action.payload.name;
+      state.userId = action.payload.userId;
     },
     _logout: (state) => {
       state.status = false;
       state.username = "";
       state.name = "";
+      state.userId = "";
     },
   },
 });

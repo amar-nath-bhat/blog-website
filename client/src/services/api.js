@@ -86,13 +86,33 @@ const ProcessError = (error) => {
 
 const API = {};
 
+const constructParams = (endpoint, body) => {
+  let params = {};
+
+  if (endpoint === "/search") {
+    params = body.search || {};
+  } else if (endpoint === "/like") {
+    params = {
+      postId: body.postId, // Example parameter for /like endpoint
+      userId: body.userId, // Example parameter for /like endpoint
+    };
+  } else if (endpoint === "/unlike") {
+    params = {
+      postId: body.postId, // Example parameter for /unlike endpoint
+      userId: body.userId, // Example parameter for /unlike endpoint
+    };
+  }
+
+  return params;
+};
+
 for (const [key, value] of Object.entries(SERVICE_URLS)) {
   API[key] = (body, showUploadProgress, showDownloadProgress) =>
     axiosInstance({
       method: value.method,
       url: value.url,
       data: value.method === "DELETE" ? {} : body,
-      params: value.url === "/search" ? body.search : {},
+      params: constructParams(value.url, body),
       responseType: value.responseType,
       headers: {
         authorization: getAccessToken(),

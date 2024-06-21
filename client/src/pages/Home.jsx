@@ -15,7 +15,7 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       let res = await API.getAllPosts();
-      if (res.isSuccess) setPosts(res.data);
+      if (res.isSuccess) setPosts(res.data.sort((a, b) => b.likes - a.likes));
     };
     fetchData();
   }, []);

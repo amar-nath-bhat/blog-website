@@ -21,13 +21,13 @@ function Signup({ isUserAuthenticated, type }) {
   const [accState, setAccState] = useState(type);
   const [signup, setSignup] = useState(signupInitialValue);
   const [login, setLogin] = useState(loginInitialValue);
-  const [error, showError] = useState("");
+  const [error, setError] = useState("");
 
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
 
   useEffect(() => {
-    showError(false);
+    setError(false);
   }, [login]);
 
   const navigate = useNavigate();
@@ -57,18 +57,18 @@ function Signup({ isUserAuthenticated, type }) {
       let response = await API.userSignup(signup);
       console.log(response);
       if (response.isSuccess) {
-        showError("");
+        setError("");
         setSignup(signupInitialValue);
         toggleAccState(e);
         console.log(accState);
       } else {
         console.log(accState);
-        showError(response.message);
+        setError(response.message);
       }
     } catch (e) {
       console.log(e.message);
 
-      showError(e.message);
+      setError(e.message);
     }
   };
 
@@ -77,7 +77,7 @@ function Signup({ isUserAuthenticated, type }) {
     try {
       let response = await API.userLogin(login);
       if (response.isSuccess) {
-        showError("");
+        setError("");
 
         sessionStorage.setItem(
           "accessToken",
@@ -87,28 +87,25 @@ function Signup({ isUserAuthenticated, type }) {
           "refreshToken",
           `Bearer ${response.data.refreshToken}`
         );
-        // console.log(response.data);
+        
         dispatch(
           _login({
             username: response.data.user.username,
             name: response.data.user.name,
+            userId: response.data.user._id,
           })
         );
-        // setAccount({
-        //   name: response.data.name,
-        //   username: response.data.username,
-        // });
 
         isUserAuthenticated(true);
         setLogin(loginInitialValue);
         navigate("/");
       } else {
-        showError(response.message);
+        setError(response.message);
         dispatch(_logout());
       }
     } catch (e) {
       console.log(e.message);
-      showError(e.message);
+      setError(e.message);
     }
   };
 
@@ -135,7 +132,8 @@ function Signup({ isUserAuthenticated, type }) {
                 name="name"
                 value={signup.name}
                 onChange={(e) => onInputChange(e)}
-                className="rounded-lg mt-2 md:mt-4 px-2 pb-2 border border-solid border-gray-500  "
+                className="rounded-lg mt-2 md:mt-4 px-2 pb-2 border border-solid border-gray-500"
+                required={true}
               />
 
               <label htmlFor="username" className="mt-2">
@@ -147,7 +145,8 @@ function Signup({ isUserAuthenticated, type }) {
                 name="username"
                 value={signup.username}
                 onChange={(e) => onInputChange(e)}
-                className="rounded-lg mt-2 md:mt-4 px-2 pb-2 border border-solid border-gray-500  "
+                className="rounded-lg mt-2 md:mt-4 px-2 pb-2 border border-solid border-gray-500"
+                required={true}
               />
 
               <label htmlFor="password">Password:</label>
@@ -158,6 +157,7 @@ function Signup({ isUserAuthenticated, type }) {
                 value={signup.password}
                 onChange={(e) => onInputChange(e)}
                 className="rounded-lg mt-2 md:mt-4 px-2 pb-2 border border-solid border-gray-500"
+                required={true}
               />
 
               <label htmlFor="confirm_password">Confirm Password: </label>
@@ -168,6 +168,7 @@ function Signup({ isUserAuthenticated, type }) {
                 value={signup.confirm_password}
                 onChange={(e) => onInputChange(e)}
                 className="rounded-lg mt-2 md:mt-4 px-2 pb-2 border border-solid border-gray-500"
+                required={true}
               />
 
               {error && <p className="text-red-500 text-base">{error}</p>}

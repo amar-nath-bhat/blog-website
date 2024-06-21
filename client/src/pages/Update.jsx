@@ -27,7 +27,7 @@ const Update = () => {
     ? URL.createObjectURL(file)
     : post.picture
     ? post.picture
-    : "blog-pic.webp";
+    : "/blog-pic.webp";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -113,12 +113,6 @@ const Update = () => {
               <option key={index}>{category.type}</option>
             ))}
           </select>
-          {/* <button
-            onClick={() => updateBlogPost()}
-            className="bg-black text-white font-extrabold px-5 rounded-xl py-2 text-xl md:text-2xl focus:outline-none focus:ring-2 focus:ring-blue-300"
-          >
-            Update
-          </button> */}
           <DialogDefault
             handler={updateBlogPost}
             body="Update"

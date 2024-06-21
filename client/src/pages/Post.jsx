@@ -4,20 +4,20 @@ import { useSelector } from "react-redux";
 import { API } from "../services/api";
 import { useState, useEffect } from "react";
 import DialogDefault from "../components/Dialog";
+
 const Post = () => {
   const { id } = useParams();
   const auth = useSelector((state) => state.auth);
+  const like = useSelector((state) => state.like);
+
   const navigate = useNavigate();
   const [post, setPost] = useState({});
-  const [likeState, setLikeState] = useState(false);
-
+  const initialLikeState = post.likes
+    ? post.likes.includes(auth.userId)
+    : false;
+  console.log(initialLikeState);
+  const [likeState, setLikeState] = useState(initialLikeState);
   const date = new Date(post.createdDate).toDateString();
-  const onLikeClick = (e) => {
-    // post.likes = likeState ? post.likes - 1 : post.likes + 1;
-    if (likeState) e.target.src = "/like.png";
-    else e.target.src = "/liked.png";
-    setLikeState(!likeState);
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,9 +40,18 @@ const Post = () => {
     await API.archivePost(post._id);
     navigate("/");
   };
+
   const handleUnArchive = async () => {
     await API.unArchivePost(post._id);
     navigate("/");
+  };
+
+  const handleLike = async (e) => {
+    console.log(likeState);
+    let res = await API.likePost(post._id, { userId: auth.userId });
+    if (res.isSuccess) {
+      setLikeState(!likeState);
+    }
   };
 
   return (
@@ -83,7 +92,7 @@ const Post = () => {
                   </svg>
                 </DialogDefault>
                 <button
-                  className="bg-black text-white rounded-full font-bold p-2 md:text-xl "
+                  className="rounded-full concert-one-regular text-white bg-black p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 text-lg md:text-2xl"
                   onClick={() => handleUpdate()}
                   title="Update"
                 >
@@ -151,12 +160,12 @@ const Post = () => {
           </span>
           <div className="flex gap-1 flex-wrap">
             <img
-              src="../../public/like.png"
+              src={likeState ? "/liked.png" : "/like.png"}
               alt="Like"
               className="w-7 h-7 cursor-pointer"
-              onClick={(e) => onLikeClick(e)}
+              onClick={(e) => handleLike(e)}
             />
-            <span>10</span>
+            <span>{post.likes ? post.likes.length : 0}</span>
           </div>
         </div>
         <hr className="border-black" />

@@ -71,7 +71,7 @@ const loginUser = async (req, res) => {
 
       // Save the refresh token in the database
       const newToken = new Token({ token: refreshToken });
-      await newToken.save();
+      // await newToken.save();
 
       // Return the tokens to the client
       return res.status(200).json({ accessToken, refreshToken, user: userObj });

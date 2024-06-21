@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "./Button";
-
+import { API } from "../services/api";
 const Navbar = () => {
   const [showDropDown, setShowDropDown] = useState(false);
 
@@ -19,6 +19,10 @@ const Navbar = () => {
     e.target.style.padding = "0";
   };
 
+  const handleLogout = async () => {
+    await API.userLogout();
+  };
+
   const hometab = () => (
     <>
       <Button type={true} className="text-white" text="Home" href="/" />
@@ -27,7 +31,13 @@ const Navbar = () => {
 
       <Button type={true} className="text-white" text="Create" href="/create" />
 
-      <Button type={true} className="text-white" text="Logout" href="/signup" />
+      <Button
+        type={true}
+        className="text-white"
+        text="Logout"
+        href="/signup"
+        onClicked={handleLogout}
+      />
     </>
   );
 
