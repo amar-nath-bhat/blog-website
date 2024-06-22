@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 const grid_stream = require("gridfs-stream");
 
-const url = "http://localhost:5000";
+const url = "https://fouxy-blogging.vercel.app/";
+// const url = "http://localhost:5000";
 
 let gfs, gridfsBucket;
 const conn = mongoose.connection;
