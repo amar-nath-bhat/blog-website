@@ -5,7 +5,8 @@ import {
 } from "../constants/config.js";
 import { getType, getAccessToken } from "../utils/common-utils.js";
 
-const API_URL = "http://localhost:5000";
+const API_URL = "https://fouxy-blogging.vercel.app/";
+//  "http://localhost:5000";
 
 const axiosInstance = axios.create({
   baseURL: API_URL,
