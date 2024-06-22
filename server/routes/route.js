@@ -64,11 +64,7 @@ router.get(
   post_controller.searchPosts
 );
 
-router.put(
-  "/like/:id",
-  jwt_controller.authenticateToken,
-  post_controller.likePost
-);
+router.put("/like", jwt_controller.authenticateToken, post_controller.likePost);
 
 // router.put(
 //   "/unlike/:id",

@@ -5,10 +5,15 @@ import { API } from "../services/api";
 import { useState, useEffect } from "react";
 import DialogDefault from "../components/Dialog";
 
+const likeInitialValue = {
+  postId: "",
+  userId: "",
+};
+
 const Post = () => {
   const { id } = useParams();
   const auth = useSelector((state) => state.auth);
-  const like = useSelector((state) => state.like);
+  // const like = useSelector((state) => state.like);
 
   const navigate = useNavigate();
   const [post, setPost] = useState({});
@@ -17,6 +22,7 @@ const Post = () => {
     : false;
   console.log(initialLikeState);
   const [likeState, setLikeState] = useState(initialLikeState);
+  const [like, setLike] = useState(likeInitialValue);
   const date = new Date(post.createdDate).toDateString();
 
   useEffect(() => {
@@ -47,10 +53,16 @@ const Post = () => {
   };
 
   const handleLike = async (e) => {
-    console.log(likeState);
-    let res = await API.likePost(post._id, { userId: auth.userId });
-    if (res.isSuccess) {
-      setLikeState(!likeState);
+    // console.log(likeState);
+    // console.log(auth.userId, auth.username, post._id);
+    setLike({ postId: post._id, userId: auth.userId });
+    try {
+      let res = await API.likePost(like);
+      if (res.isSuccess) {
+        setLikeState(!likeState);
+      }
+    } catch (e) {
+      console.log(e);
     }
   };
 

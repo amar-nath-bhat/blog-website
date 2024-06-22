@@ -126,9 +126,10 @@ const searchPosts = async (request, response) => {
 };
 
 const likePost = async (req, res) => {
+  // console.log("HI");
   try {
-    const post = await Post.findById(req.params.id);
-    const userId = req.query.userId;
+    const post = await Post.findById(req.body.postId);
+    const userId = req.body.userId;
     // Check if the post has already been liked by this user
     if (post.likes.includes(userId)) {
       post.likes.pull(userId);

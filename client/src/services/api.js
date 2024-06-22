@@ -6,7 +6,7 @@ import {
 import { getType, getAccessToken } from "../utils/common-utils.js";
 
 const API_URL = "https://fouxy-blogging.vercel.app/";
-//  "http://localhost:5000";
+// const API_URL = "http://localhost:5000";
 
 const axiosInstance = axios.create({
   baseURL: API_URL,
@@ -92,16 +92,8 @@ const constructParams = (endpoint, body) => {
 
   if (endpoint === "/search") {
     params = body.search || {};
-  } else if (endpoint === "/like") {
-    params = {
-      postId: body.postId, // Example parameter for /like endpoint
-      userId: body.userId, // Example parameter for /like endpoint
-    };
-  } else if (endpoint === "/unlike") {
-    params = {
-      postId: body.postId, // Example parameter for /unlike endpoint
-      userId: body.userId, // Example parameter for /unlike endpoint
-    };
+  } else {
+    params = {};
   }
 
   return params;
@@ -114,6 +106,7 @@ for (const [key, value] of Object.entries(SERVICE_URLS)) {
       url: value.url,
       data: value.method === "DELETE" ? {} : body,
       params: constructParams(value.url, body),
+      // param: value.url === "/search" ? body.search : {},
       responseType: value.responseType,
       headers: {
         authorization: getAccessToken(),

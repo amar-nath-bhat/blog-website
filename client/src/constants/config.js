@@ -37,7 +37,7 @@ export const SERVICE_URLS = {
   archivePost: { url: "/archive", method: "PUT", query: true },
   getRefreshToken: { url: "/token", method: "POST" },
   searchPosts: { url: "/search", method: "GET", query: true },
-  likePost: { url: "/like", method: "PUT", query: true },
-  unlikePost: { url: "/like", method: "PUT", query: true },
+  likePost: { url: "/like", method: "PUT", query: true, params: true },
+  // unlikePost: { url: "/like", method: "PUT", query: true },
   userLogout: { url: "/logout", method: "POST" },
 };
