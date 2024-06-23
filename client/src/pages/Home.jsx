@@ -12,10 +12,15 @@ const Home = () => {
   const [posts, setPosts] = useState([]);
   const auth = useSelector((state) => state.auth);
 
+  const sortLikes = (a, b) => {
+    if (a.likes === undefined) a.likes = [];
+    if (b.likes === undefined) b.likes = [];
+    return b.likes.length - a.likes.length;
+  };
   useEffect(() => {
     const fetchData = async () => {
       let res = await API.getAllPosts();
-      if (res.isSuccess) setPosts(res.data.sort((a, b) => b.likes - a.likes));
+      if (res.isSuccess) setPosts(res.data.sort((a, b) => sortLikes(a, b)));
     };
     fetchData();
   }, []);
