@@ -16,17 +16,9 @@ export const Button = ({
   className,
   children,
 }) => {
-  const navigate = useNavigate();
-  const navigateTo = (e) => {
-    if (href === "/signup" || href === "/login") sessionStorage.clear();
-    e.preventDefault();
-    if (onClicked) (e) => onClicked(e);
-    navigate(href);
-  };
   return type ? (
     <Link
       className={className}
-      onClick={(e) => navigateTo(e)}
       onMouseEnter={(e) => buttonRiseFunc(e)}
       onMouseLeave={(e) => buttonFallFunc(e)}
       key="linkButton"
@@ -38,7 +30,7 @@ export const Button = ({
   ) : (
     <button
       className={className}
-      onClick={onClicked}
+      onClick={(e) => onClicked(e)}
       onMouseEnter={(e) => buttonRiseFunc(e)}
       onMouseLeave={(e) => buttonFallFunc(e)}
       key="regularButton"

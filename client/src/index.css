@@ -30,4 +30,8 @@
   font-weight: 400;
   font-style: normal;
 }
-    
+
+.hover-button:hover{
+  scale: 1.1;
+  transition: all 0.3s ease-in-out;
+}

@@ -32,11 +32,7 @@ router.get(
   jwt_controller.authenticateToken,
   post_controller.getPost
 );
-router.get(
-  "/posts",
-  jwt_controller.authenticateToken,
-  post_controller.getAllPosts
-);
+router.get("/posts", post_controller.getAllPosts);
 
 router.post(
   "/file/upload",
