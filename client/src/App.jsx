@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { _login } from "./app/authSlice";
 
 // Pages/Components
 import Navbar from "./components/Navbar";
@@ -10,25 +12,43 @@ import CreateBlog from "./pages/CreateBlog";
 import Post from "./pages/Post";
 import Update from "./pages/Update";
 import Login from "./pages/Login";
-import Loading from "./components/Loading";
+
 // Context
 import DataProvider from "./context/DataProvider";
 
 // RouteComponents
 import { PublicRoute, PrivateRoute } from "./components/Route";
 
+// LoadingScreen Component
+import LoadingScreen from "./components/Loading";
+
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const accessToken = sessionStorage.getItem("accessToken");
+    const refreshToken = sessionStorage.getItem("refreshToken");
+    const userData = JSON.parse(sessionStorage.getItem("userData"));
+
+    if (accessToken && refreshToken && userData) {
+      dispatch(_login(userData));
+      setIsAuthenticated(true);
+    }
+    setLoading(false);
+  }, [dispatch]);
 
   return (
-    <>
-      <DataProvider>
-        <BrowserRouter>
-          <Navbar
-            isAuthenticated={isAuthenticated}
-            setIsAuthenticated={setIsAuthenticated}
-          />
+    <DataProvider>
+      <BrowserRouter>
+        <Navbar
+          isAuthenticated={isAuthenticated}
+          setIsAuthenticated={setIsAuthenticated}
+        />
+        {loading ? (
+          <LoadingScreen />
+        ) : (
           <Routes>
             <Route
               path="/signup"
@@ -38,8 +58,9 @@ function App() {
               path="/login"
               element={
                 <PublicRoute
-                  component={Login}
-                  isUserAuthenticated={setIsAuthenticated}
+                  component={() => (
+                    <Login isUserAuthenticated={setIsAuthenticated} />
+                  )}
                 />
               }
             />
@@ -57,9 +78,7 @@ function App() {
               path="/blogs"
               element={
                 <PrivateRoute
-                  component={() => (
-                    <Blogs loading={loading} setLoading={setLoading} />
-                  )}
+                  component={Blogs}
                   isAuthenticated={isAuthenticated}
                 />
               }
@@ -92,9 +111,9 @@ function App() {
               }
             />
           </Routes>
-        </BrowserRouter>
-      </DataProvider>
-    </>
+        )}
+      </BrowserRouter>
+    </DataProvider>
   );
 }
 

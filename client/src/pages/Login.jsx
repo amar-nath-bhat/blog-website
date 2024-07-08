@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { API } from "../services/api.js";
 import { useDispatch } from "react-redux";
@@ -31,6 +31,14 @@ function Login({ isUserAuthenticated }) {
         sessionStorage.setItem(
           "refreshToken",
           `Bearer ${response.data.refreshToken}`
+        );
+        sessionStorage.setItem(
+          "userData",
+          JSON.stringify({
+            username: response.data.user.username,
+            name: response.data.user.name,
+            userId: response.data.user._id,
+          })
         );
 
         dispatch(

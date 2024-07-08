@@ -25,6 +25,7 @@ const Navbar = ({ isAuthenticated, setIsAuthenticated }) => {
       console.log("Logging out...");
       await API.userLogout();
       dispatch(_logout());
+      sessionStorage.clear();
       setIsAuthenticated(false);
       navigate("/login");
     } catch (error) {
