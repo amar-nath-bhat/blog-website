@@ -10,7 +10,7 @@ import CreateBlog from "./pages/CreateBlog";
 import Post from "./pages/Post";
 import Update from "./pages/Update";
 import Login from "./pages/Login";
-
+import Loading from "./components/Loading";
 // Context
 import DataProvider from "./context/DataProvider";
 
@@ -19,6 +19,7 @@ import { PublicRoute, PrivateRoute } from "./components/Route";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   return (
     <>
@@ -42,12 +43,23 @@ function App() {
                 />
               }
             />
-            <Route path="/" element={<PublicRoute component={Home} />} />
+            <Route
+              path="/"
+              element={
+                <PublicRoute
+                  component={() => (
+                    <Home loading={loading} setLoading={setLoading} />
+                  )}
+                />
+              }
+            />
             <Route
               path="/blogs"
               element={
                 <PrivateRoute
-                  component={Blogs}
+                  component={() => (
+                    <Blogs loading={loading} setLoading={setLoading} />
+                  )}
                   isAuthenticated={isAuthenticated}
                 />
               }

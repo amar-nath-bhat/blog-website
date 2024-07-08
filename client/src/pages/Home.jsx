@@ -1,14 +1,15 @@
 import BlogPost from "../components/BlogPost";
 import { Link } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { API } from "../services/api";
 import SearchBar from "../components/SearchBar";
 import Filter from "../components/Filter";
-
 import { useSelector } from "react-redux";
+import Loading from "../components/Loading";
+import { debounce } from "lodash";
 
-const Home = () => {
+const Home = ({ loading, setLoading }) => {
   const [posts, setPosts] = useState([]);
   const auth = useSelector((state) => state.auth);
 
@@ -17,27 +18,47 @@ const Home = () => {
     if (b.likes === undefined) b.likes = [];
     return b.likes.length - a.likes.length;
   };
+
+  const debouncedSetLoading = useCallback(
+    debounce((value) => setLoading(value), 300),
+    [setLoading]
+  );
+
   useEffect(() => {
+    debouncedSetLoading(true);
     const fetchData = async () => {
       let res = await API.getAllPosts();
-      if (res.isSuccess) setPosts(res.data.sort((a, b) => sortLikes(a, b)));
+      if (res.isSuccess) {
+        setPosts(res.data.sort((a, b) => sortLikes(a, b)));
+        debouncedSetLoading(false);
+      }
     };
     fetchData();
-  }, []);
+  }, [debouncedSetLoading]);
 
   const searchPosts = async (search) => {
-    console.log(search);
+    debouncedSetLoading(true);
     let res;
     res = await API.searchPosts({ search: search });
-    if (res.isSuccess) setPosts(res.data);
+    if (res.isSuccess) {
+      setPosts(res.data);
+      debouncedSetLoading(false);
+    }
   };
 
   const searchCategory = async (category) => {
-    console.log(category);
+    debouncedSetLoading(true);
     let res;
     res = await API.getAllPosts({ category: category, archived: false });
-    if (res.isSuccess) setPosts(res.data);
+    if (res.isSuccess) {
+      setPosts(res.data);
+      debouncedSetLoading(false);
+    }
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="px-5 md:px-10 pb-10 flex flex-col gap-5 md:gap-10">

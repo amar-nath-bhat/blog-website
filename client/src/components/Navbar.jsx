@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { API } from "../services/api";
 import { useDispatch } from "react-redux";
@@ -10,9 +10,15 @@ const Navbar = ({ isAuthenticated, setIsAuthenticated }) => {
   const [showDropDown, setShowDropDown] = useState(false);
 
   const showDropDownFunc = () => {
-    console.log(showDropDown);
+    // console.log(showDropDown);
     setShowDropDown(!showDropDown);
   };
+
+  useEffect(() => {
+    if (showDropDown) {
+      showDropDownFunc();
+    }
+  }, []);
 
   const handleLogout = async () => {
     try {

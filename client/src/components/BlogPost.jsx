@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import SkeletonLoader from "./SkeletonLoader";
 
 const BlogPost = ({ post }) => {
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (post) {
+      setLoading(false);
+    }
+  }, [post]);
 
   const addEllipsis = (str, limit) => {
     return str.length > limit ? str.substring(0, limit) + "..." : str;
   };
+
+  if (loading) {
+    return <SkeletonLoader />;
+  }
 
   return (
     <section

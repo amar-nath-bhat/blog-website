@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 import { API } from "../services/api.js";
 
 const signupInitialValue = {
@@ -21,22 +22,24 @@ function Signup() {
   const signupUser = async (e) => {
     e.preventDefault();
     try {
-      // console.log(signup);
       let response = await API.userSignup(signup);
       console.log(response);
       if (response.isSuccess) {
         setSignup(signupInitialValue);
-        console.log(accState);
+        navigate("/login");
+        toast.success(response.msg);
       } else {
-        console.log(accState);
+        toast.error(response.msg);
       }
     } catch (e) {
       console.log(e.message);
+      toast.error(e.message);
     }
   };
 
   return (
     <div className="flex justify-center p-24 min-h-[75vh]">
+      <Toaster />
       <div
         className="rounded-2xl shadow-lg shadow-black border-black md:p-16 p-6 concert-one-regular flex flex-col items-center justify-start md:text-4xl text-xl w-fit h-full"
         style={{ backgroundColor: "#ff9570" }}
