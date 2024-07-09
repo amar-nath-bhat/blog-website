@@ -6,6 +6,7 @@ import { categories } from "../constants/data";
 import { API } from "../services/api";
 import { useSelector } from "react-redux";
 import DialogDefault from "../components/Dialog";
+import toast, { Toaster } from "react-hot-toast";
 
 const initialPost = {
   title: "",
@@ -35,7 +36,11 @@ const CreateBlog = () => {
           data.append("file", file);
 
           const response = await API.uploadImage(data);
-          post.picture = response.data;
+          if (response.data.isSuccess) {
+            post.picture = response.data.imageUrl;
+            console.log(post.picture);
+            toast.success("Image uploaded successfully");
+          } else toast.error("Failed to upload image");
         }
       } catch (e) {
         console.log(e);

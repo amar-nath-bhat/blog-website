@@ -23,17 +23,20 @@ function Signup() {
     e.preventDefault();
     try {
       let response = await API.userSignup(signup);
-      console.log(response);
-      if (response.isSuccess) {
+      if (response.data.isSuccess) {
+        toast.success(response.data.msg);
+        console.log(response);
         setSignup(signupInitialValue);
         navigate("/login");
-        toast.success(response.msg);
       } else {
-        toast.error(response.msg);
+        console.log(response);
+        toast.error(response.data.msg);
       }
-    } catch (e) {
-      console.log(e.message);
-      toast.error(e.message);
+    } catch (error) {
+      console.log(error);
+      // Extract the error message from the response
+      const errorMessage = error.response?.data?.msg || error.message;
+      toast.error(errorMessage);
     }
   };
 

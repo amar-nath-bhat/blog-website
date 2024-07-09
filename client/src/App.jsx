@@ -78,7 +78,9 @@ function App() {
               path="/blogs"
               element={
                 <PrivateRoute
-                  component={Blogs}
+                  component={() => (
+                    <Blogs loading={loading} setLoading={setLoading} />
+                  )}
                   isAuthenticated={isAuthenticated}
                 />
               }

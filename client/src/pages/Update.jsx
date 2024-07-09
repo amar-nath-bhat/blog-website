@@ -32,8 +32,8 @@ const Update = () => {
   useEffect(() => {
     const fetchData = async () => {
       let response = await API.getPostById(id);
-      if (response.isSuccess) {
-        setPost(response.data);
+      if (response.data.isSuccess) {
+        setPost(response.data.post);
       }
     };
     fetchData();
@@ -47,8 +47,8 @@ const Update = () => {
         data.append("file", file);
 
         const response = await API.uploadImage(data);
-        if (response.isSuccess) {
-          post.picture = response.data;
+        if (response.data.isSuccess) {
+          post.picture = response.data.imageUrl;
         }
       }
     };

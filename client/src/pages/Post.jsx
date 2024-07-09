@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { API } from "../services/api";
 import { useState, useEffect } from "react";
 import DialogDefault from "../components/Dialog";
+import toast from "react-hot-toast";
 
 const likeInitialValue = {
   postId: "",
@@ -28,7 +29,7 @@ const Post = () => {
   useEffect(() => {
     const fetchData = async () => {
       let res = await API.getPostById(id);
-      if (res.isSuccess) setPost(res.data);
+      if (res.data.isSuccess) setPost(res.data.post);
     };
     fetchData();
   }, []);
@@ -43,7 +44,12 @@ const Post = () => {
   };
 
   const handleArchive = async () => {
-    await API.archivePost(post._id);
+    let response = await API.archivePost(post._id);
+    if (response.data.isSuccess) {
+      toast.success("Post archived successfully");
+    } else {
+      toast.error("Failed to archive post");
+    }
     navigate("/");
   };
 

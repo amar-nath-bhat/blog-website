@@ -1,148 +1,164 @@
 const Post = require("../models/post");
 
-const createPost = async (request, response) => {
+const createPost = async (req, res) => {
   try {
-    const post = await new Post(request.body);
-    const res = post.save();
-    if (res) response.status(200).json("Post saved successfully");
-    else response.status(500).json("Post not saved");
+    const post = new Post(req.body);
+    const result = await post.save();
+    if (result) {
+      res.status(200).json({ isSuccess: true, msg: "Post saved successfully" });
+    } else {
+      res.status(500).json({ isSuccess: false, msg: "Post not saved" });
+    }
   } catch (error) {
-    response.status(500).json(error);
+    res.status(500).json({ isSuccess: false, msg: error.message });
   }
 };
 
-const updatePost = async (request, response) => {
+const updatePost = async (req, res) => {
   try {
-    const post = await Post.findById(request.params.id);
+    const post = await Post.findById(req.params.id);
 
     if (!post) {
-      response.status(404).json({ msg: "Post not found" });
+      res.status(404).json({ isSuccess: false, msg: "Post not found" });
       return;
     }
 
-    await Post.findByIdAndUpdate(request.params.id, { $set: request.body });
+    await Post.findByIdAndUpdate(req.params.id, { $set: req.body });
 
-    response.status(200).json("post updated successfully");
+    res.status(200).json({ isSuccess: true, msg: "Post updated successfully" });
   } catch (error) {
-    response.status(500).json(error);
+    res.status(500).json({ isSuccess: false, msg: error.message });
   }
 };
 
-const deletePost = async (request, response) => {
+const deletePost = async (req, res) => {
   try {
-    const post = await Post.findByIdAndDelete(request.params.id);
-    response.status(200).json("post deleted successfully");
+    const post = await Post.findByIdAndDelete(req.params.id);
+
+    if (!post) {
+      res.status(404).json({ isSuccess: false, msg: "Post not found" });
+      return;
+    }
+
+    res.status(200).json({ isSuccess: true, msg: "Post deleted successfully" });
   } catch (error) {
-    response.status(500).json(error.msg);
+    res.status(500).json({ isSuccess: false, msg: error.message });
   }
 };
 
-const getPost = async (request, response) => {
+const getPost = async (req, res) => {
   try {
-    const post = await Post.findById(request.params.id);
+    const post = await Post.findById(req.params.id);
 
-    response.status(200).json(post);
+    if (!post) {
+      res.status(404).json({ isSuccess: false, msg: "Post not found" });
+      return;
+    }
+
+    res.status(200).json({ isSuccess: true, post });
   } catch (error) {
-    response.status(500).json(error);
+    res.status(500).json({ isSuccess: false, msg: error.message });
   }
 };
 
-const getAllPosts = async (request, response) => {
-  let username = request.query.username;
-  let category = request.query.category;
-  let archived = request.query.archived;
+const getAllPosts = async (req, res) => {
+  let { username, category, archived } = req.query;
   let posts;
   try {
-    if (username) posts = await Post.find({ username: username });
-    else if (category)
-      posts = await Post.find({ category: category, archived: false });
+    if (username) posts = await Post.find({ username });
+    else if (category) posts = await Post.find({ category, archived: false });
     else if (archived) posts = await Post.find({ archived: true });
     else posts = await Post.find({ archived: false });
 
-    response.status(200).json(posts);
+    res.status(200).json({ isSuccess: true, posts });
   } catch (error) {
-    response.status(500).json(error);
+    res.status(500).json({ isSuccess: false, msg: error.message });
   }
 };
 
-const archivePost = async (request, response) => {
+const archivePost = async (req, res) => {
   try {
-    const post = await Post.findById(request.params.id);
+    const post = await Post.findById(req.params.id);
 
     if (!post) {
-      response.status(404).json({ msg: "Post not found" });
-    }
-
-    await Post.findByIdAndUpdate(request.params.id, {
-      $set: { archived: true },
-    });
-
-    response.status(200).json("post archived successfully");
-  } catch (error) {
-    response.status(500).json(error);
-  }
-};
-
-const unArchivePost = async (request, response) => {
-  try {
-    const post = await Post.findById(request.params.id);
-
-    if (!post) {
-      response.status(404).json({ msg: "Post not found" });
+      res.status(404).json({ isSuccess: false, msg: "Post not found" });
       return;
     }
 
-    await Post.findByIdAndUpdate(request.params.id, {
-      $set: { archived: false },
-    });
+    await Post.findByIdAndUpdate(req.params.id, { $set: { archived: true } });
 
-    response.status(200).json("post unarchived successfully");
+    res
+      .status(200)
+      .json({ isSuccess: true, msg: "Post archived successfully" });
   } catch (error) {
-    response.status(500).json(error);
+    res.status(500).json({ isSuccess: false, msg: error.message });
   }
 };
 
-const searchPosts = async (request, response) => {
-  let search = request.query.search;
+const unArchivePost = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+
+    if (!post) {
+      res.status(404).json({ isSuccess: false, msg: "Post not found" });
+      return;
+    }
+
+    await Post.findByIdAndUpdate(req.params.id, { $set: { archived: false } });
+
+    res
+      .status(200)
+      .json({ isSuccess: true, msg: "Post unarchived successfully" });
+  } catch (error) {
+    res.status(500).json({ isSuccess: false, msg: error.message });
+  }
+};
+
+const searchPosts = async (req, res) => {
+  let search = req.query.search;
+  let username = req.query.username;
   if (!search || typeof search !== "string") {
-    console.error("Invalid search term ", search);
-    getAllPosts(request, response);
+    getAllPosts(req, res);
     return;
   }
-  // console.log(search);
+
   try {
     let posts = await Post.find(
       {
         $text: { $search: search },
         archived: false,
       },
+      { username: username },
       { score: { $meta: "textScore" } }
     ).sort({ score: { $meta: "textScore" } });
 
-    response.status(200).json(posts);
+    res.status(200).json({ isSuccess: true, posts });
   } catch (error) {
-    response.status(500).json(error);
+    res.status(500).json({ isSuccess: false, msg: error.message });
   }
 };
 
 const likePost = async (req, res) => {
-  // console.log("HI");
   try {
     const post = await Post.findById(req.body.postId);
     const userId = req.body.userId;
-    // Check if the post has already been liked by this user
+
+    if (!post) {
+      res.status(404).json({ isSuccess: false, msg: "Post not found" });
+      return;
+    }
+
     if (post.likes.includes(userId)) {
       post.likes.pull(userId);
       await post.save();
-      return res.status(200).json({ msg: "Post Unliked" });
+      return res.status(200).json({ isSuccess: true, msg: "Post unliked" });
     }
 
     post.likes.push(userId);
     await post.save();
-    return res.status(200).json({ msg: "Post Liked" });
+    return res.status(200).json({ isSuccess: true, msg: "Post liked" });
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).json({ isSuccess: false, msg: err.message });
   }
 };
 
@@ -151,17 +167,22 @@ const unlikePost = async (req, res) => {
     const post = await Post.findById(req.params.id);
     const userId = req.query.userId;
 
-    // Check if the post has not yet been liked by this user
+    if (!post) {
+      res.status(404).json({ isSuccess: false, msg: "Post not found" });
+      return;
+    }
+
     if (!post.likes.includes(userId)) {
-      return res.status(400).json({ msg: "Post has not yet been liked" });
+      return res
+        .status(400)
+        .json({ isSuccess: false, msg: "Post has not yet been liked" });
     }
 
     post.likes.pull(userId);
     await post.save();
-    res.json(post.likes);
+    res.status(200).json({ isSuccess: true, likes: post.likes });
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).json({ isSuccess: false, msg: err.message });
   }
 };
 

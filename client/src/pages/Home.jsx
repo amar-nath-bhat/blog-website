@@ -8,6 +8,7 @@ import Filter from "../components/Filter";
 import { useSelector } from "react-redux";
 import Loading from "../components/Loading";
 import { debounce } from "lodash";
+import toast, { Toaster } from "react-hot-toast";
 
 const Home = ({ loading, setLoading }) => {
   const [posts, setPosts] = useState([]);
@@ -28,8 +29,9 @@ const Home = ({ loading, setLoading }) => {
     debouncedSetLoading(true);
     const fetchData = async () => {
       let res = await API.getAllPosts();
-      if (res.isSuccess) {
-        setPosts(res.data.sort((a, b) => sortLikes(a, b)));
+      if (res.data.isSuccess) {
+        // console.log(res.data);
+        setPosts(res.data.posts.sort((a, b) => sortLikes(a, b)));
         debouncedSetLoading(false);
       }
     };
@@ -40,8 +42,8 @@ const Home = ({ loading, setLoading }) => {
     debouncedSetLoading(true);
     let res;
     res = await API.searchPosts({ search: search });
-    if (res.isSuccess) {
-      setPosts(res.data);
+    if (res.data.isSuccess) {
+      setPosts(res.data.posts);
       debouncedSetLoading(false);
     }
   };
@@ -50,8 +52,8 @@ const Home = ({ loading, setLoading }) => {
     debouncedSetLoading(true);
     let res;
     res = await API.getAllPosts({ category: category, archived: false });
-    if (res.isSuccess) {
-      setPosts(res.data);
+    if (res.data.isSuccess) {
+      setPosts(res.data.posts);
       debouncedSetLoading(false);
     }
   };

@@ -8,6 +8,7 @@ import { API } from "../services/api";
 import { useSelector } from "react-redux";
 import Loading from "../components/Loading";
 import { debounce } from "lodash";
+import toast, { Toaster } from "react-hot-toast";
 
 const Blogs = ({ loading, setLoading }) => {
   const [posts, setPosts] = useState([]);
@@ -21,13 +22,37 @@ const Blogs = ({ loading, setLoading }) => {
     debouncedSetLoading(true);
     const fetchData = async () => {
       let res = await API.getAllPosts({ username: auth.username });
-      if (res.isSuccess) {
-        setPosts(res.data);
+      if (res.data.isSuccess) {
+        setPosts(res.data.posts);
         debouncedSetLoading(false);
       }
     };
     fetchData();
   }, [debouncedSetLoading]);
+
+  // const searchPosts = async (search) => {
+  //   debouncedSetLoading(true);
+  //   let res;
+  //   res = await API.searchPosts({ username: auth.username, search: search });
+  //   if (res.data.isSuccess) {
+  //     setPosts(res.data.posts);
+  //     debouncedSetLoading(false);
+  //   }
+  // };
+
+  // const searchCategory = async (category) => {
+  //   debouncedSetLoading(true);
+  //   let res;
+  //   res = await API.getAllPosts({
+  //     username: auth.username,
+  //     category: category,
+  //     archived: false,
+  //   });
+  //   if (res.data.isSuccess) {
+  //     setPosts(res.data.posts);
+  //     debouncedSetLoading(false);
+  //   }
+  // };
 
   if (loading) {
     return <Loading />;
@@ -55,10 +80,10 @@ const Blogs = ({ loading, setLoading }) => {
       </section>
       <section className="flex flex-col gap-10 justify-center items-center">
         <h1 className="text-4xl concert-one-regular uppercase">Your Blogs</h1>
-        <div className="w-full md:w-2/3 flex justify-between gap-5 md:gap-10">
-          <SearchBar />
-          <Filter />
-        </div>
+        {/* <div className="w-full md:w-2/3 flex justify-between gap-5 md:gap-10">
+          <SearchBar searchHandle={searchPosts} />
+          <Filter searchHandle={searchCategory} />
+        </div> */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 blog-post-content-font w-full">
           {posts?.length ? (
             posts.map((post, index) => (

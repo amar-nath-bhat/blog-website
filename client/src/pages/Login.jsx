@@ -23,7 +23,7 @@ function Login({ isUserAuthenticated }) {
     e.preventDefault();
     try {
       let response = await API.userLogin(login);
-      if (response.isSuccess) {
+      if (response.data.isSuccess) {
         sessionStorage.setItem(
           "accessToken",
           `Bearer ${response.data.accessToken}`

@@ -26,18 +26,22 @@ axiosInstance.interceptors.request.use(
     return config;
   },
   function (error) {
-    return Promise.reject(ProcessError(error));
+    return error;
   }
 );
 
 axiosInstance.interceptors.response.use(
   function (response) {
     // Stop global loader here
-    return ProcessResponse(response);
+    return response;
   },
   function (error) {
     // Stop global loader here
-    return Promise.reject(ProcessError(error));
+    // Ensure the error response is properly structured
+    if (error.response && error.response.data && error.response.data.msg) {
+      return Promise.reject(new Error(error.response.data.msg));
+    }
+    return Promise.reject(error);
   }
 );
 

@@ -3,12 +3,12 @@ const mongoose = require("mongoose");
 const postSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: true,
+    required: [true, "Title is required"],
     unique: true,
   },
   description: {
     type: String,
-    required: true,
+    required: [true, "Description is required"],
   },
   picture: {
     type: String,
@@ -16,7 +16,7 @@ const postSchema = new mongoose.Schema({
   },
   username: {
     type: String,
-    required: true,
+    required: [true, "Username is required"],
   },
   category: {
     type: String,
