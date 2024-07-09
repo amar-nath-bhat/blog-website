@@ -66,21 +66,13 @@ function App() {
             />
             <Route
               path="/"
-              element={
-                <PublicRoute
-                  component={() => (
-                    <Home loading={loading} setLoading={setLoading} />
-                  )}
-                />
-              }
+              element={<PublicRoute component={() => <Home />} />}
             />
             <Route
               path="/blogs"
               element={
                 <PrivateRoute
-                  component={() => (
-                    <Blogs loading={loading} setLoading={setLoading} />
-                  )}
+                  component={() => <Blogs />}
                   isAuthenticated={isAuthenticated}
                 />
               }

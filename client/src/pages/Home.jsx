@@ -8,10 +8,10 @@ import Filter from "../components/Filter";
 import { useSelector } from "react-redux";
 import Loading from "../components/Loading";
 import { debounce } from "lodash";
-import toast, { Toaster } from "react-hot-toast";
 
-const Home = ({ loading, setLoading }) => {
+const Home = () => {
   const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const auth = useSelector((state) => state.auth);
 
   const sortLikes = (a, b) => {
@@ -26,56 +26,34 @@ const Home = ({ loading, setLoading }) => {
   );
 
   useEffect(() => {
+    debouncedSetLoading(true);
     const fetchData = async () => {
-      try {
-        debouncedSetLoading(true);
-        const res = await API.getAllPosts();
-        if (res.data.isSuccess) {
-          setPosts(res.data.posts.sort((a, b) => sortLikes(a, b)));
-        } else {
-          toast.error("Failed to fetch posts.");
-        }
-      } catch (error) {
-        console.error("Error fetching posts:", error);
-        toast.error("Error fetching posts.");
-      } finally {
+      let res = await API.getAllPosts();
+      console.log(res);
+      if (res.data.isSuccess) {
+        setPosts(res.data.posts.sort((a, b) => sortLikes(a, b)));
         debouncedSetLoading(false);
       }
     };
-
     fetchData();
   }, [debouncedSetLoading]);
 
   const searchPosts = async (search) => {
-    try {
-      debouncedSetLoading(true);
-      const res = await API.searchPosts({ search });
-      if (res.data.isSuccess) {
-        setPosts(res.data.posts);
-      } else {
-        toast.error("Failed to fetch search results.");
-      }
-    } catch (error) {
-      console.error("Error searching posts:", error);
-      toast.error("Error searching posts.");
-    } finally {
+    debouncedSetLoading(true);
+    let res;
+    res = await API.searchPosts({ search: search });
+    if (res.data.isSuccess) {
+      setPosts(res.data.posts);
       debouncedSetLoading(false);
     }
   };
 
   const searchCategory = async (category) => {
-    try {
-      debouncedSetLoading(true);
-      const res = await API.getAllPosts({ category, archived: false });
-      if (res.data.isSuccess) {
-        setPosts(res.data.posts);
-      } else {
-        toast.error("Failed to fetch category posts.");
-      }
-    } catch (error) {
-      console.error("Error fetching category posts:", error);
-      toast.error("Error fetching category posts.");
-    } finally {
+    debouncedSetLoading(true);
+    let res;
+    res = await API.getAllPosts({ category: category, archived: false });
+    if (res.data.isSuccess) {
+      setPosts(res.data.posts);
       debouncedSetLoading(false);
     }
   };
@@ -86,8 +64,6 @@ const Home = ({ loading, setLoading }) => {
 
   return (
     <div className="px-5 md:px-10 pb-10 flex flex-col gap-5 md:gap-10">
-      <Toaster />
-
       <section className="flex justify-center">
         <div className="mt-3 concert-one-regular uppercase absolute text-white flex flex-col justify-center items-center gap-3 ">
           <h1 className="text-[35px] md:text-[60px] text-deep-orange-400">

@@ -10,8 +10,9 @@ import Loading from "../components/Loading";
 import { debounce } from "lodash";
 import toast, { Toaster } from "react-hot-toast";
 
-const Blogs = ({ loading, setLoading }) => {
+const Blogs = () => {
   const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const auth = useSelector((state) => state.auth);
   const debouncedSetLoading = useCallback(
     debounce((value) => setLoading(value), 300),
