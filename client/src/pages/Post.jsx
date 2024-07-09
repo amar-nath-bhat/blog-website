@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { API } from "../services/api";
 import { useState, useEffect } from "react";
 import DialogDefault from "../components/Dialog";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 const likeInitialValue = {
   postId: "",
@@ -74,6 +74,8 @@ const Post = () => {
 
   return (
     <div className="px-5 md:px-10 pb-10 flex flex-col gap-5 md:gap-10">
+      <Toaster />
+
       <img
         className="md:h-[60vh] h-[40vh] w-full rounded-b-lg object-cover object-center shadow-xl shadow-blue-gray-900/50"
         src={post.picture ? post.picture : "/blog.avif"}

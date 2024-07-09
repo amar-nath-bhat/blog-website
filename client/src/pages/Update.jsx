@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { categories } from "../constants/data";
 import { API } from "../services/api";
 import DialogDefault from "../components/Dialog";
+import toast, { Toaster } from "react-hot-toast";
 
 const initialPost = {
   title: "",
@@ -56,7 +57,12 @@ const Update = () => {
   }, [file]);
 
   const updateBlogPost = async () => {
-    await API.updatePost(post);
+    let response = await API.updatePost(post);
+    if (response.data.isSuccess) {
+      toast.success("Post updated successfully");
+    } else {
+      toast.error("Failed to update post");
+    }
     navigate(`/post/${post._id}`);
   };
 
@@ -66,6 +72,8 @@ const Update = () => {
 
   return (
     <div className="px-5 md:px-10 flex flex-col gap-10 pb-10 ">
+      <Toaster />
+
       <img
         className="md:h-[60vh] h-[40vh] w-full rounded-b-lg object-cover object-center shadow-xl shadow-blue-gray-900/50"
         src={url_image}

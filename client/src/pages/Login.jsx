@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { API } from "../services/api.js";
 import { useDispatch } from "react-redux";
 import { _login, _logout } from "../app/authSlice.js";
+import toast, { Toaster } from "react-hot-toast";
 
 const loginInitialValue = {
   username: "",
@@ -51,18 +52,23 @@ function Login({ isUserAuthenticated }) {
 
         isUserAuthenticated(true);
         setLogin(loginInitialValue);
+        toast.success("Login successful");
         navigate("/");
       } else {
         dispatch(_logout());
+        toast.error(response.data.msg);
         isUserAuthenticated(false);
       }
     } catch (e) {
+      toast.error("Login failed");
       console.log(e.message);
     }
   };
 
   return (
     <div className="flex justify-center pt-24 min-h-[75vh]">
+      <Toaster />
+
       <div
         className="rounded-2xl shadow-lg shadow-black border-black md:p-16 p-6 concert-one-regular flex flex-col items-center justify-start md:text-4xl text-xl w-fit h-full"
         style={{ backgroundColor: "#ff9570" }}

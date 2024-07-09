@@ -45,7 +45,7 @@ const Navbar = ({ isAuthenticated, setIsAuthenticated }) => {
     <nav className="bg-color-navbar flex-col concert-one-regular py-4">
       <div className="flex justify-between items-center text-4xl md:px-16 px-8">
         <button onClick={() => navigate("/")}>
-          <img src="logo-no-bg.png" alt="Fouxy" className="w-16 h-16" />
+          <img src="/logo-no-bg.png" alt="Fouxy" className="w-16 h-16" />
         </button>
         <button
           className="md:hidden block w-8 h-8 hover-button"

@@ -60,6 +60,8 @@ const Blogs = ({ loading, setLoading }) => {
 
   return (
     <div className="px-5 md:px-10 pb-10 flex flex-col gap-5 md:gap-10">
+      <Toaster />
+
       <section className="flex justify-center">
         <div className="mt-3 concert-one-regular uppercase absolute text-white flex flex-col justify-center items-center gap-3 ">
           <h1 className="text-[35px] md:text-[60px] text-deep-orange-400">
