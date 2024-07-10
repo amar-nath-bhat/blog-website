@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import Loading from "../components/Loading";
 import { debounce } from "lodash";
 import toast, { Toaster } from "react-hot-toast";
+import Hero from "../components/Hero";
 
 const Blogs = () => {
   const [posts, setPosts] = useState([]);
@@ -63,30 +64,13 @@ const Blogs = () => {
     <div className="px-5 md:px-10 pb-10 flex flex-col gap-5 md:gap-10">
       <Toaster />
 
-      <section className="flex justify-center">
-        <div className="mt-3 concert-one-regular uppercase absolute text-white flex flex-col justify-center items-center gap-3 ">
-          <h1 className="text-[35px] md:text-[60px] text-deep-orange-400">
-            Explore Blogs!
-          </h1>
-          <Link to="/create">
-            <Button className="text-[15px] md:text-[20px] text-orange-300 concert-one-regular pb-4 md:pb-5">
-              Create Your Own Blog
-            </Button>
-          </Link>
-        </div>
-
-        <img
-          className="md:h-[60vh] h-[40vh] w-full rounded-b-lg object-cover object-center shadow-xl shadow-blue-gray-900/50"
-          src="blog.avif"
-          alt="blog image"
-        />
-      </section>
+      <Hero
+        title={"Explore Blogs!"}
+        subTitle={"Create Your Own Blog"}
+        url_image={"/banner.webp"}
+      />
       <section className="flex flex-col gap-10 justify-center items-center">
         <h1 className="text-4xl concert-one-regular uppercase">Your Blogs</h1>
-        {/* <div className="w-full md:w-2/3 flex justify-between gap-5 md:gap-10">
-          <SearchBar searchHandle={searchPosts} />
-          <Filter searchHandle={searchCategory} />
-        </div> */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 blog-post-content-font w-full">
           {posts?.length ? (
             posts.map((post, index) => (

@@ -38,6 +38,5 @@ export const SERVICE_URLS = {
   getRefreshToken: { url: "/token", method: "POST" },
   searchPosts: { url: "/search", method: "GET", query: true },
   likePost: { url: "/like", method: "PUT", query: true, params: true },
-  // unlikePost: { url: "/like", method: "PUT", query: true },
   userLogout: { url: "/logout", method: "POST" },
 };

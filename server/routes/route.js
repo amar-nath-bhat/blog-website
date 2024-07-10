@@ -62,12 +62,6 @@ router.get(
 
 router.put("/like", jwt_controller.authenticateToken, post_controller.likePost);
 
-// router.put(
-//   "/unlike/:id",
-//   jwt_controller.authenticateToken,
-//   post_controller.unlikePost
-// );
-
 router.post("/token", jwt_controller.createNewToken);
 
 module.exports = router;

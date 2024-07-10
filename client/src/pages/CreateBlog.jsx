@@ -1,11 +1,13 @@
 import React from "react";
-import { Button } from "@material-tailwind/react";
 import { useNavigate, Link } from "react-router-dom";
+import { Button } from "@material-tailwind/react";
+
 import { useState, useEffect } from "react";
 import { categories } from "../constants/data";
 import { API } from "../services/api";
 import { useSelector } from "react-redux";
 import DialogDefault from "../components/Dialog";
+import Hero from "../components/Hero";
 import toast, { Toaster } from "react-hot-toast";
 
 const initialPost = {
@@ -65,25 +67,11 @@ const CreateBlog = () => {
   return (
     <div className="px-5 md:px-10 flex flex-col gap-10 pb-10 ">
       <Toaster />
-
-      <section className="flex justify-center">
-        <div className="mt-3  uppercase absolute text-white flex flex-col justify-center items-center gap-3 concert-one-regular">
-          <h1 className="text-[35px] md:text-[60px] text-deep-orange-400">
-            Start Blogging !
-          </h1>
-          <Link to="/blogs">
-            <Button className="text-[15px] md:text-[20px] text-orange-300 pb-5 md:pb-5 concert-one-regular">
-              View Blogs
-            </Button>
-          </Link>
-        </div>
-
-        <img
-          className="md:h-[60vh] h-[40vh] w-full rounded-b-lg object-cover object-center shadow-xl shadow-blue-gray-900/50"
-          src={url_image}
-          alt="blog image"
-        />
-      </section>
+      <Hero
+        title={"Start Blogging !"}
+        subTitle={"View Blogs"}
+        url_image={url_image}
+      />
       <section className="flex flex-col gap-10 justify-evenly bg-color-default p-10 rounded-lg shadow-blue-gray-900/50 shadow-xl border-2 border-black">
         <div className="flex gap-10 flex-col md:flex-row md:justify-center md:items-center">
           <div className="flex flex-row justify-center items-center gap-5 md:w-2/3">

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import SkeletonLoader from "./SkeletonLoader";
+import Loading from "./Loading";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const BlogPost = ({ post }) => {
   const [loading, setLoading] = useState(true);
@@ -17,7 +19,7 @@ const BlogPost = ({ post }) => {
   };
 
   if (loading) {
-    return <SkeletonLoader />;
+    return <Loading />;
   }
 
   return (
@@ -26,8 +28,8 @@ const BlogPost = ({ post }) => {
       onClick={() => navigate(`/post/${post._id}`)}
     >
       <img
-        className="h-[30vh] md:h-[50vh] w-full rounded-lg shadow-lg object-cover object-center"
-        src={post.picture ? post.picture : "/blog.avif"}
+        className="md:h-[60vh] h-[40vh] w-full rounded-t-lg object-cover object-center "
+        src={post.picture || "/blog.avif"}
         alt="blog image"
       />
 
@@ -40,10 +42,10 @@ const BlogPost = ({ post }) => {
             <span className="text-start">Author: {post.username}</span>
             <div className="flex items-center justify-between">
               <div className="flex gap-1">
-                <img src="like.png" alt="Like" className="w-7 h-7 mt-1" />
+                <img src="like.png" alt="Like" className="w-7 h-7" />
                 <span>{post.likes ? post.likes.length : 0}</span>
               </div>
-              <span className="bg-color-navbar text-white rounded-2xl font-bold px-3 text-lg pb-2">
+              <span className="bg-color-navbar text-white rounded-2xl font-bold px-3 py-2 text-lg">
                 {post.category}
               </span>
             </div>

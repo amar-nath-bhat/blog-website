@@ -8,6 +8,7 @@ import Filter from "../components/Filter";
 import { useSelector } from "react-redux";
 import Loading from "../components/Loading";
 import { debounce } from "lodash";
+import Hero from "../components/Hero";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -64,24 +65,11 @@ const Home = () => {
 
   return (
     <div className="px-5 md:px-10 pb-10 flex flex-col gap-5 md:gap-10">
-      <section className="flex justify-center">
-        <div className="mt-3 concert-one-regular uppercase absolute text-white flex flex-col justify-center items-center gap-3 ">
-          <h1 className="text-[35px] md:text-[60px] text-deep-orange-400">
-            Welcome {auth.status ? auth.name : " to Fouxy"}
-          </h1>
-          <Link to="/blogs">
-            <Button className="text-[15px] md:text-[20px] text-orange-300 concert-one-regular pb-4 md:pb-5">
-              Start Blogging
-            </Button>
-          </Link>
-        </div>
-
-        <img
-          className="md:h-[60vh] h-[40vh] w-full rounded-b-lg object-cover object-center shadow-xl shadow-blue-gray-900/50"
-          src="blog.avif"
-          alt="blog image"
-        />
-      </section>
+      <Hero
+        title={`Welcome ${auth.status ? auth.name : " to Fouxy"}`}
+        subTitle={"Start Blogging"}
+        url_image={"/blog.avif"}
+      />
       <section className="md:px-7 lg:px-72">
         <div className="mt-3 md:mt-0 flex flex-col gap-5 justify-center items-center">
           <h1 className="text-4xl concert-one-regular uppercase">Top Blogs</h1>

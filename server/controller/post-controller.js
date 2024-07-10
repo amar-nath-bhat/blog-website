@@ -66,8 +66,10 @@ const getAllPosts = async (req, res) => {
   let posts;
   try {
     if (username) posts = await Post.find({ username });
-    else if (category) posts = await Post.find({ category, archived: false });
-    else if (archived) posts = await Post.find({ archived: true });
+    else if (category) {
+      if (category === "All") posts = await Post.find({ archived: false });
+      else posts = await Post.find({ category, archived: false });
+    } else if (archived) posts = await Post.find({ archived: true });
     else posts = await Post.find({ archived: false });
 
     res.status(200).json({ isSuccess: true, posts });
@@ -164,30 +166,6 @@ const likePost = async (req, res) => {
   }
 };
 
-const unlikePost = async (req, res) => {
-  try {
-    const post = await Post.findById(req.params.id);
-    const userId = req.query.userId;
-
-    if (!post) {
-      res.status(404).json({ isSuccess: false, msg: "Post not found" });
-      return;
-    }
-
-    if (!post.likes.includes(userId)) {
-      return res
-        .status(400)
-        .json({ isSuccess: false, msg: "Post has not yet been liked" });
-    }
-
-    post.likes.pull(userId);
-    await post.save();
-    res.status(200).json({ isSuccess: true, likes: post.likes });
-  } catch (err) {
-    res.status(500).json({ isSuccess: false, msg: err.message });
-  }
-};
-
 module.exports = {
   createPost,
   updatePost,
@@ -198,5 +176,4 @@ module.exports = {
   unArchivePost,
   searchPosts,
   likePost,
-  unlikePost,
 };
