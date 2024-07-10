@@ -6,24 +6,13 @@ import { useState, useEffect } from "react";
 import DialogDefault from "../components/Dialog";
 import toast, { Toaster } from "react-hot-toast";
 
-const likeInitialValue = {
-  postId: "",
-  userId: "",
-};
-
 const Post = () => {
   const { id } = useParams();
   const auth = useSelector((state) => state.auth);
-  // const like = useSelector((state) => state.like);
 
   const navigate = useNavigate();
   const [post, setPost] = useState({});
-  const initialLikeState = post.likes
-    ? post.likes.includes(auth.userId)
-    : false;
-  console.log(initialLikeState);
-  const [likeState, setLikeState] = useState(initialLikeState);
-  const [like, setLike] = useState(likeInitialValue);
+  const [likeState, setLikeState] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
   const date = new Date(post.createdDate).toDateString();
 
@@ -33,12 +22,13 @@ const Post = () => {
       if (res.data.isSuccess) {
         setPost(res.data.post);
         setLikeCount(res.data.post.likes ? res.data.post.likes.length : 0);
+        setLikeState(res.data.post.likes.includes(auth.userId));
       } else {
         toast.error("Failed to fetch post");
       }
     };
     fetchData();
-  }, []);
+  }, [id, auth.userId]);
 
   const handleDelete = async () => {
     await API.deletePost(post._id);
@@ -64,12 +54,11 @@ const Post = () => {
     navigate("/");
   };
 
-  const handleLike = async (e) => {
-    setLike({ postId: post._id, userId: auth.userId });
-
+  const handleLike = async () => {
+    const like = { postId: post._id, userId: auth.userId };
     try {
       let res = await API.likePost(like);
-      if (res.isSuccess) {
+      if (res.data.isSuccess) {
         setLikeState(!likeState);
         setLikeCount(likeState ? likeCount - 1 : likeCount + 1);
       }

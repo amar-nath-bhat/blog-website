@@ -140,7 +140,7 @@ const searchPosts = async (req, res) => {
 
 const likePost = async (req, res) => {
   try {
-    const post = await Post.findById(req.body.postId);
+    let post = await Post.findById(req.body.postId);
     const userId = req.body.userId;
 
     if (!post) {
@@ -149,12 +149,12 @@ const likePost = async (req, res) => {
     }
 
     if (post.likes.includes(userId)) {
-      post = await Post.findByIdAndUpdate(req.body.postId, {
+      await Post.findByIdAndUpdate(req.body.postId, {
         $pull: { likes: userId },
       });
       return res.status(200).json({ isSuccess: true, msg: "Post unliked" });
     } else {
-      post = await Post.findByIdAndUpdate(req.body.postId, {
+      await Post.findByIdAndUpdate(req.body.postId, {
         $push: { likes: userId },
       });
       return res.status(200).json({ isSuccess: true, msg: "Post liked" });
