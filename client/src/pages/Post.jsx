@@ -24,12 +24,18 @@ const Post = () => {
   console.log(initialLikeState);
   const [likeState, setLikeState] = useState(initialLikeState);
   const [like, setLike] = useState(likeInitialValue);
+  const [likeCount, setLikeCount] = useState(0);
   const date = new Date(post.createdDate).toDateString();
 
   useEffect(() => {
     const fetchData = async () => {
       let res = await API.getPostById(id);
-      if (res.data.isSuccess) setPost(res.data.post);
+      if (res.data.isSuccess) {
+        setPost(res.data.post);
+        setLikeCount(res.data.post.likes ? res.data.post.likes.length : 0);
+      } else {
+        toast.error("Failed to fetch post");
+      }
     };
     fetchData();
   }, []);
@@ -59,13 +65,13 @@ const Post = () => {
   };
 
   const handleLike = async (e) => {
-    // console.log(likeState);
-    // console.log(auth.userId, auth.username, post._id);
     setLike({ postId: post._id, userId: auth.userId });
+
     try {
       let res = await API.likePost(like);
       if (res.isSuccess) {
         setLikeState(!likeState);
+        setLikeCount(likeState ? likeCount - 1 : likeCount + 1);
       }
     } catch (e) {
       console.log(e);
@@ -185,7 +191,7 @@ const Post = () => {
               className="w-7 h-7 cursor-pointer"
               onClick={(e) => handleLike(e)}
             />
-            <span>{post.likes ? post.likes.length : 0}</span>
+            <span>{likeCount}</span>
           </div>
         </div>
         <hr className="border-black" />

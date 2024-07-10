@@ -149,14 +149,16 @@ const likePost = async (req, res) => {
     }
 
     if (post.likes.includes(userId)) {
-      post.likes.pull(userId);
-      await post.save();
+      post = await Post.findByIdAndUpdate(req.body.postId, {
+        $pull: { likes: userId },
+      });
       return res.status(200).json({ isSuccess: true, msg: "Post unliked" });
+    } else {
+      post = await Post.findByIdAndUpdate(req.body.postId, {
+        $push: { likes: userId },
+      });
+      return res.status(200).json({ isSuccess: true, msg: "Post liked" });
     }
-
-    post.likes.push(userId);
-    await post.save();
-    return res.status(200).json({ isSuccess: true, msg: "Post liked" });
   } catch (err) {
     res.status(500).json({ isSuccess: false, msg: err.message });
   }
