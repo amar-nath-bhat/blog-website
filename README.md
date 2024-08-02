@@ -67,10 +67,6 @@ npm run dev
 4. View and like on other users' blog posts.
 5. Use the search functionality to find specific blog posts.
 
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
-
 ## Roadmap
 
 Here are some planned features and improvements for future:
