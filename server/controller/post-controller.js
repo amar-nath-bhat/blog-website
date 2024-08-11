@@ -117,22 +117,26 @@ const unArchivePost = async (req, res) => {
 };
 
 const searchPosts = async (req, res) => {
-  let search = req.query.search;
-  let username = req.query.username;
+  const { search, username } = req.query;
+
   if (!search || typeof search !== "string") {
     getAllPosts(req, res);
     return;
   }
 
   try {
-    let posts = await Post.find(
-      {
-        $text: { $search: search },
-        archived: false,
-      },
-      { username: username },
-      { score: { $meta: "textScore" } }
-    ).sort({ score: { $meta: "textScore" } });
+    const query = {
+      $text: { $search: search },
+      archived: false,
+    };
+
+    const projection = username
+      ? { score: { $meta: "textScore" }, username: 1 }
+      : { score: { $meta: "textScore" } };
+
+    const posts = await Post.find(query, projection).sort({
+      score: { $meta: "textScore" },
+    });
 
     res.status(200).json({ isSuccess: true, posts });
   } catch (error) {

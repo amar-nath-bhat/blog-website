@@ -54,11 +54,7 @@ router.put(
   post_controller.unArchivePost
 );
 
-router.get(
-  "/search",
-  jwt_controller.authenticateToken,
-  post_controller.searchPosts
-);
+router.get("/search", post_controller.searchPosts);
 
 router.put("/like", jwt_controller.authenticateToken, post_controller.likePost);
 
